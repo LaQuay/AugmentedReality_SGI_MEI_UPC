@@ -1,1 +1,1 @@
-# AugmentetReality_SGI_MEI_UPC
+# AugmentedReality_SGI_MEI_UPC
