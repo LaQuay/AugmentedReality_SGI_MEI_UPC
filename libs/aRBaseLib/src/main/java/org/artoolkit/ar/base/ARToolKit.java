@@ -122,27 +122,28 @@ public class ARToolKit {
         return true;
     }
 
-	/**
-	 * Initialises the native code library if it is available.
-	 * @return true if the library was found and successfully initialised.
-	 * @param resourcesDirectoryPath The full path (in the filesystem) to the directory to be used by the
-	 *            native routines as the base for relative references.
-	 *            e.g. Activity.getContext().getCacheDir().getAbsolutePath()
-	 *            or Activity.getContext().getFilesDir().getAbsolutePath()
-	 */
-	public boolean initialiseNativeWithOptions(String resourcesDirectoryPath, int pattSize, int pattCountMax) {
-		if (!loadedNative) return false;
-		if (!NativeInterface.arwInitialiseARWithOptions(pattSize, pattCountMax)) {
-			Log.e(TAG, "Error initialising native library!");
-			return false;
-		}
-		Log.i(TAG, "ARToolKit version: " + NativeInterface.arwGetARToolKitVersion());
-		if (!NativeInterface.arwChangeToResourcesDir(resourcesDirectoryPath)) {
-			Log.i(TAG, "Error while attempting to change working directory to resources directory.");
-		}
-		initedNative = true;
-		return true;
-	}
+    /**
+     * Initialises the native code library if it is available.
+     *
+     * @param resourcesDirectoryPath The full path (in the filesystem) to the directory to be used by the
+     *                               native routines as the base for relative references.
+     *                               e.g. Activity.getContext().getCacheDir().getAbsolutePath()
+     *                               or Activity.getContext().getFilesDir().getAbsolutePath()
+     * @return true if the library was found and successfully initialised.
+     */
+    public boolean initialiseNativeWithOptions(String resourcesDirectoryPath, int pattSize, int pattCountMax) {
+        if (!loadedNative) return false;
+        if (!NativeInterface.arwInitialiseARWithOptions(pattSize, pattCountMax)) {
+            Log.e(TAG, "Error initialising native library!");
+            return false;
+        }
+        Log.i(TAG, "ARToolKit version: " + NativeInterface.arwGetARToolKitVersion());
+        if (!NativeInterface.arwChangeToResourcesDir(resourcesDirectoryPath)) {
+            Log.i(TAG, "Error while attempting to change working directory to resources directory.");
+        }
+        initedNative = true;
+        return true;
+    }
 
     /**
      * Returns whether the native library was found and successfully initialised.
@@ -157,15 +158,15 @@ public class ARToolKit {
     /**
      * Initialises the ARToolKit using the specified video size.
      *
-     * @param videoWidth     The width of the video image in pixels.
-     * @param videoHeight    The height of the video image in pixels.
-     * @param pixelFormat    string with format in which buffers will be pushed. Supported values include "NV21", "NV12", "YUV_420_888", "RGBA", "RGB_565", and "MONO".
-	 * @param cameraParaPath Either: null to search for camera parameters specific to the device,
-	 *            or a path (in the filesystem) to a camera parameter file. The path may be an
-	 *            absolute path, or relative to the resourcesDirectoryPath set in initialiseNative().
-	 * @param cameraIndex    Integer 0-based index of the camera in use. E.g. 0 represents the first (usually rear) camera on the device. The
-	 *            camera represented by a given index must not change over the lifetime of the device.
-	 * @param cameraIsFrontFacing false if camera is rear-facing (the default) or true if camera is facing toward the user.
+     * @param videoWidth          The width of the video image in pixels.
+     * @param videoHeight         The height of the video image in pixels.
+     * @param pixelFormat         string with format in which buffers will be pushed. Supported values include "NV21", "NV12", "YUV_420_888", "RGBA", "RGB_565", and "MONO".
+     * @param cameraParaPath      Either: null to search for camera parameters specific to the device,
+     *                            or a path (in the filesystem) to a camera parameter file. The path may be an
+     *                            absolute path, or relative to the resourcesDirectoryPath set in initialiseNative().
+     * @param cameraIndex         Integer 0-based index of the camera in use. E.g. 0 represents the first (usually rear) camera on the device. The
+     *                            camera represented by a given index must not change over the lifetime of the device.
+     * @param cameraIsFrontFacing false if camera is rear-facing (the default) or true if camera is facing toward the user.
      * @return true if initialisation was successful.
      */
     public boolean startWithPushedVideo(int videoWidth, int videoHeight, String pixelFormat, String cameraParaPath, int cameraIndex, boolean cameraIsFrontFacing) {
@@ -182,15 +183,15 @@ public class ARToolKit {
             return false;
         }
         if (0 > NativeInterface.arwAndroidVideoPushInit(0, videoWidth, videoHeight,
-                                                        pixelFormat, cameraIndex,
-                                                        (cameraIsFrontFacing ? 1 : 0))) {
+                pixelFormat, cameraIndex,
+                (cameraIsFrontFacing ? 1 : 0))) {
             Log.e(TAG, "startWithPushedVideo(): Error initialising Android video");
             return false;
         }
 
-        debugImageData = new byte[frameWidth * frameHeight * 4];
-        debugImageColors = new int[frameWidth * frameHeight];
-        debugBitmap = Bitmap.createBitmap(frameWidth, frameHeight, Bitmap.Config.ARGB_8888);
+        //debugImageData = new byte[frameWidth * frameHeight * 4];
+        //debugImageColors = new int[frameWidth * frameHeight];
+        //debugBitmap = Bitmap.createBitmap(frameWidth, frameHeight, Bitmap.Config.ARGB_8888);
 
         return true;
     }
@@ -348,7 +349,8 @@ public class ARToolKit {
      */
     public boolean convertAndDetect1(byte[] frame, int frameSize) {
 
-        if ((!initedNative) || (frame == null)) {
+        //if ((!initedNative) || (frame == null)) {
+        if ((frame == null)) {
             return false;
         }
 
@@ -371,7 +373,8 @@ public class ARToolKit {
      */
     public boolean convertAndDetect2(ByteBuffer[] framePlanes, int[] framePlanePixelStrides, int[] framePlaneRowStrides) {
 
-        if ((!initedNative) || (framePlanes == null)) {
+        //if ((!initedNative) || (framePlanes == null)) {
+        if ((framePlanes == null)) {
             return false;
         }
 
@@ -398,7 +401,7 @@ public class ARToolKit {
                     framePlanes[1], framePlanePixelStrides[1], framePlaneRowStrides[1],
                     framePlanes[2], framePlanePixelStrides[2], framePlaneRowStrides[2],
                     null, 0, 0) < 0) {
-               return false;
+                return false;
             }
         } else if (framePlaneCount == 4) {
             if (NativeInterface.arwAndroidVideoPush2(0,
