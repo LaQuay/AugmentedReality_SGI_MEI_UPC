@@ -144,7 +144,7 @@ public class Hasher {
         //long elapsedTime = System.nanoTime() - hashStartTime;
         //Log.i(TAG, "Hash time: " + (elapsedTime / 1000000.0f) + " ms");
 
-        String hash = toHex(digestResult);
+        String hash = toHex(digestResult);     
         //Log.i(TAG, "Hash result of " + filename + ": " + hash);
 
         return hash;

@@ -140,7 +140,6 @@ public class AndroidUtils {
      * Returns a formatted string representation of the number of bytes specified. The largest
      * suitable suffix up until GB will be used, with the returned value expressed to two
      * decimal places.
-     *
      * @param bytes The number of bytes to be reported.
      * @return The specified number of bytes, formatted as a string, in bytes, KB, MB or GB.
      */
@@ -171,7 +170,6 @@ public class AndroidUtils {
     /**
      * Reports to the log information about the device's display. This information includes
      * the width and height, and density (low, medium, high).
-     *
      * @param activity The Activity to report on.
      */
     public static void reportDisplayInformation(Activity activity) {
@@ -195,10 +193,10 @@ public class AndroidUtils {
                 break;
         }
 
-        Log.i(TAG, "reportDisplayInformation(): Display is " + displayWidth + "x" + displayHeight
+        Log.i(TAG, "Display is " + displayWidth + "x" + displayHeight
                 + ", Density: " + density);
 
-    }
+	}
 
 
 }

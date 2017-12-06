@@ -46,21 +46,22 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
- * Base renderer which should be subclassed in the main application and provided
+ * Base renderer which should be subclassed in the main application and provided 
  * to the ARActivity using its {@link supplyRenderer} method.
- * <p/>
- * Subclasses should override {@link configureARScene}, which will be called by
- * the Activity when AR initialisation is complete. The Renderer can use this method
+ *
+ * Subclasses should override {@link configureARScene}, which will be called by 
+ * the Activity when AR initialisation is complete. The Renderer can use this method 
  * to add markers to the scene, and perform other scene initialisation.
- * <p/>
- * The {@link draw} method should also be override to perfom actual rendering. This is
- * in preference to directly overriding {@link onDrawFrame}, because ARRenderer will check
+ *
+ * The {@link draw} method should also be override to perfom actual rendering. This is 
+ * in preference to directly overriding {@link onDrawFrame}, because ARRenderer will check 
  * that the ARToolKit is running before calling draw.
+ *
  */
 public class ARRenderer implements GLSurfaceView.Renderer {
 
     /**
-     * Allows subclasses to load markers and prepare the scene. This is called after
+     * Allows subclasses to load markers and prepare the scene. This is called after 
      * initialisation is complete.
      */
     public boolean configureARScene() {

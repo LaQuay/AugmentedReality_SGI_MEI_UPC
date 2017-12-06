@@ -53,7 +53,7 @@ public class RenderUtils {
         fb.position(0);
         return fb;
     }
-
+    
     public static IntBuffer buildIntBuffer(int[] arr) {
         ByteBuffer bb = ByteBuffer.allocateDirect(arr.length * 4);
         bb.order(ByteOrder.nativeOrder());
@@ -62,7 +62,7 @@ public class RenderUtils {
         ib.position(0);
         return ib;
     }
-
+    
     public static ShortBuffer buildShortBuffer(short[] arr) {
         ByteBuffer bb = ByteBuffer.allocateDirect(arr.length * 2);
         bb.order(ByteOrder.nativeOrder());

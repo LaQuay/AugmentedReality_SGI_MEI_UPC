@@ -38,7 +38,7 @@
 package org.artoolkit.ar.base;
 
 /**
- * Utility class to measure performance in frames per second. This can be useful for camera
+ * Utility class to measure performance in frames per second. This can be useful for camera 
  * capture or graphics rendering.
  */
 public class FPSCounter {

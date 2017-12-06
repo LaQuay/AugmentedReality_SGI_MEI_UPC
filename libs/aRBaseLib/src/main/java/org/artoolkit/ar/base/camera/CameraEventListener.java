@@ -38,7 +38,7 @@
 package org.artoolkit.ar.base.camera;
 
 /**
- * The CameraEventListener interface allows an observer to respond to events
+ * The CameraEventListener interface allows an observer to respond to events 
  * from a {@link CaptureCameraPreview}.
  */
 public interface CameraEventListener {
@@ -53,18 +53,18 @@ public interface CameraEventListener {
      * @param cameraIndex         Zero-based index of the camera in use. If only one camera is present, will be 0.
      * @param cameraIsFrontFacing false if camera is rear-facing (the default) or true if camera is facing toward the user.
      */
-    public void cameraPreviewStarted(int width, int height, int rate, int cameraIndex, boolean cameraIsFrontFacing);
+    void cameraPreviewStarted(int width, int height, int rate, int cameraIndex, boolean cameraIsFrontFacing);
 
     /**
      * Called when the camera preview has a new frame ready.
      *
      * @param frame A byte array from the camera, in the camera's capture format.
      */
-    public void cameraPreviewFrame(byte[] frame, int frameSize);
+    void cameraPreviewFrame(byte[] frame);
 
     /**
      * Called when the capture preview is stopped. No new frames will be sent.
      */
-    public void cameraPreviewStopped();
+    void cameraPreviewStopped();
 
 }

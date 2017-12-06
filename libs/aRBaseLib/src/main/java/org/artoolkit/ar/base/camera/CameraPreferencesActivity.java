@@ -54,39 +54,39 @@ import java.util.List;
 /**
  * CameraPreferencesActivity provides a menu which allows the camera and its
  * resolution to be selected interactively by the user.
- * <p/>
+ *
  * To use CameraPreferencesActivity in your own application, add the following
  * to your AndroidManifest.xml:
- * <p/>
+ *
  * <activity
  * android:name="org.artoolkit.ar.base.camera.CameraPreferencesActivity"
  * ></activity>
- * <p/>
+ *
  * The activity draws on string values provided by ARBaseLib's strings.xml
  * resource.
- * <p/>
+ *
  * Additionally, if your activity is not based on ARActivity, the following
  * additional additions must be made:
- * <p/>
+ *
  * Once per install of Application and prior to using any of the camera
  * preferences, e.g. in Application.onCreate(), or if not subclassing
  * Application, in Activity.onCreate():
- * <p/>
+ *
  * import android.preference.PreferenceManager;
  * PreferenceManager.setDefaultValues(this,
  * org.artoolkit.ar.base.R.xml.preferences, false);
- * <p/>
+ *
  * When opening the camera:
- * <p/>
+ *
  * import android.os.Build; import android.preference.PreferenceManager; Camera
  * camera = null; if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD)
  * { int cameraIndex =
  * Integer.parseInt(PreferenceManager.getDefaultSharedPreferences
  * (callingContext).getString("pref_cameraIndex", "0"));
  * Camera.open(cameraIndex); } else { else camera = Camera.open(); }
- * <p/>
+ *
  * When configuring camera:
- * <p/>
+ *
  * String camResolution =
  * PreferenceManager.getDefaultSharedPreferences(callingContext
  * ).getString("pref_cameraResolution",
@@ -94,9 +94,9 @@ import java.util.List;
  * String[] dims = camResolution.split("x", 2); Camera.Parameters parameters =
  * camera.getParameters(); parameters.setPreviewSize(Integer.parseInt(dims[0]),
  * Integer.parseInt(dims[1])); camera.setParameters(parameters);
- * <p/>
+ *
  * To determine if the camera is rear-facing or front-facing:
- * <p/>
+ *
  * boolean frontFacing = false; if (Build.VERSION.SDK_INT >=
  * Build.VERSION_CODES.GINGERBREAD) { Camera.CameraInfo cameraInfo = new
  * Camera.CameraInfo(); int cameraIndex =
@@ -109,7 +109,83 @@ import java.util.List;
 public class CameraPreferencesActivity extends PreferenceActivity implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String TAG = "CameraPreferences";
+    private static final PixelSizeToAspectRatio aspectRatios[] = new PixelSizeToAspectRatio[]{
+            new PixelSizeToAspectRatio(1, 1, ASPECT_RATIO._1_1, "1:1"), // 1.0:
+            new PixelSizeToAspectRatio(11, 9, ASPECT_RATIO._11_9, "11:9"), // 1.222:
+            // 176x144
+            // (QCIF),
+            // 352x288
+            // (CIF)
+            new PixelSizeToAspectRatio(5, 4, ASPECT_RATIO._5_4, "5:4"), // 1.25:
+            // 1280x1024
+            // (SXGA),
+            // 2560x2048
+            new PixelSizeToAspectRatio(4, 3, ASPECT_RATIO._4_3, "4:3"), // 1.333:
+            // 320x240
+            // (QVGA),
+            // 480x360,
+            // 640x480
+            // (VGA),
+            // 768x576
+            // (576p),
+            // 800x600
+            // (SVGA),
+            // 960x720,
+            // 1024x768
+            // (XGA),
+            // 1152x864,
+            // 1280x960,
+            // 1400x1050,
+            // 1600x1200,
+            // 2048x1536
+            new PixelSizeToAspectRatio(3, 2, ASPECT_RATIO._3_2, "3:2"), // 1.5:
+            // 240x160,
+            // 480x320,
+            // 960x640,
+            // 720x480
+            // (480p),
+            // 1152x768,
+            // 1280x854,
+            // 1440x960
+            new PixelSizeToAspectRatio(14, 9, ASPECT_RATIO._14_9, "14:9"), // 1.556:
+            new PixelSizeToAspectRatio(8, 5, ASPECT_RATIO._8_5, "8:5"), // 1.6:
+            // 320x200,
+            // 1280x800,
+            // 1440x900,
+            // 1680x1050,
+            // 1920x1200,
+            // 2560x1600
+            new PixelSizeToAspectRatio(5, 3, ASPECT_RATIO._5_3, "5:3"), // 1.667:
+            // 800x480,
+            // 1280x768,
+            // 1600x960
+            new PixelSizeToAspectRatio(16, 9, ASPECT_RATIO._16_9, "16:9"), // 1.778:
+            // 1280x720
+            // (720p),
+            // 1920x1080
+            // (1080p)
+            new PixelSizeToAspectRatio(9, 5, ASPECT_RATIO._9_5, "9:5"), // 1.8:
+            // 864x480
+            new PixelSizeToAspectRatio(17, 9, ASPECT_RATIO._17_9, "17:9"), // 1.889:
+            // 2040x1080
 
+            // Some values that are close to standard ratios.
+            new PixelSizeToAspectRatio(683, 384, ASPECT_RATIO._16_9, "16:9"), // ~1.778:
+            // 1366x768
+            new PixelSizeToAspectRatio(85, 48, ASPECT_RATIO._16_9, "16:9"), // ~1.778:
+            // 1360x768
+            new PixelSizeToAspectRatio(256, 135, ASPECT_RATIO._17_9, "17:9"), // ~1.889:
+            // 2048x1080
+            // (2K)
+            new PixelSizeToAspectRatio(512, 307, ASPECT_RATIO._5_3, "5:3"), // ~1.667:
+            // 1024x614
+            new PixelSizeToAspectRatio(30, 23, ASPECT_RATIO._4_3, "4:3"), // ~1.333:
+            // 480x368
+            new PixelSizeToAspectRatio(128, 69, ASPECT_RATIO._17_9, "17:9"), // ~1.889:
+            // 1024x552
+            new PixelSizeToAspectRatio(30, 23, ASPECT_RATIO._11_9, "11:9"), // ~1.222:
+            // 592x480
+    };
     private int cameraCount;
     private ListPreference cameraIndexPreference;
     private ListPreference cameraResolutionPreference;
@@ -209,7 +285,7 @@ public class CameraPreferencesActivity extends PreferenceActivity implements
             }
 
         } catch (RuntimeException e) {
-            Log.e(TAG, "buildResolutionListForCameraIndex(): Camera failed to open: " + e.getLocalizedMessage());
+            Log.e(TAG, "Camera failed to open: " + e.getLocalizedMessage());
         }
     }
 
@@ -249,59 +325,6 @@ public class CameraPreferencesActivity extends PreferenceActivity implements
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
-	public enum ASPECT_RATIO {
-		_1_1, // 1.0
-		_11_9, // 1.222
-		_5_4, // 1.25
-		_4_3, // 1.333
-		_SQRROOT2_1, // 1.414
-		_3_2, // 1.5
-		_14_9, // 1.556
-		_8_5, // 1.6
-		_5_3, // 1.667
-		_16_9, // 1.778
-		_9_5, // 1.8
-		_17_9, // 1.889
-		_UNIQUE
-	}
-
-	private static final class PixelSizeToAspectRatio {
-		int width;
-		int height;
-		ASPECT_RATIO aspectRatio;
-		String name;
-
-		PixelSizeToAspectRatio(int w, int h, ASPECT_RATIO ar, String name) {
-			this.width = w;
-			this.height = h;
-			this.aspectRatio = ar;
-			this.name = name;
-		}
-	}
-
-    private static final PixelSizeToAspectRatio aspectRatios[] = new PixelSizeToAspectRatio[]{
-		new PixelSizeToAspectRatio(1, 1, ASPECT_RATIO._1_1, "1:1"), // 1.0:
-		new PixelSizeToAspectRatio(11, 9, ASPECT_RATIO._11_9, "11:9"), // 1.222: 176x144, (QCIF), 352x288, (CIF)
-		new PixelSizeToAspectRatio(5, 4, ASPECT_RATIO._5_4, "5:4"), // 1.25: 1280x1024, (SXGA), 2560x2048
-		new PixelSizeToAspectRatio(4, 3, ASPECT_RATIO._4_3, "4:3"), // 1.333: 320x240, (QVGA), 480x360, 640x480, (VGA), 768x576, (576p), 800x600, (SVGA), 960x720, 1024x768, (XGA), 1152x864, 1280x960, 1400x1050, 1600x1200, 2048x1536
-		new PixelSizeToAspectRatio(3, 2, ASPECT_RATIO._3_2, "3:2"), // 1.5: 240x160, 480x320, 960x640, 720x480, (480p), 1152x768, 1280x854, 1440x960
-		new PixelSizeToAspectRatio(14, 9, ASPECT_RATIO._14_9, "14:9"), // 1.556:
-		new PixelSizeToAspectRatio(8, 5, ASPECT_RATIO._8_5, "8:5"), // 1.6: 320x200, 1280x800, 1440x900, 1680x1050, 1920x1200, 2560x1600
-		new PixelSizeToAspectRatio(5, 3, ASPECT_RATIO._5_3, "5:3"), // 1.667: 800x480, 1280x768, 1600x960
-		new PixelSizeToAspectRatio(16, 9, ASPECT_RATIO._16_9, "16:9"), // 1.778: 1280x720, (720p), 1920x1080, (1080p)
-		new PixelSizeToAspectRatio(9, 5, ASPECT_RATIO._9_5, "9:5"), // 1.8: 864x480
-		new PixelSizeToAspectRatio(17, 9, ASPECT_RATIO._17_9, "17:9"), // 1.889: 2040x1080
-
-		// Some values that are close to standard ratios.
-		new PixelSizeToAspectRatio(683, 384, ASPECT_RATIO._16_9, "16:9"), // ~1.778: 1366x768
-		new PixelSizeToAspectRatio(85, 48, ASPECT_RATIO._16_9, "16:9"), // ~1.778: 1360x768
-		new PixelSizeToAspectRatio(256, 135, ASPECT_RATIO._17_9, "17:9"), // ~1.889: 2048x1080, (2K)
-		new PixelSizeToAspectRatio(512, 307, ASPECT_RATIO._5_3, "5:3"), // ~1.667: 1024x614
-		new PixelSizeToAspectRatio(30, 23, ASPECT_RATIO._4_3, "4:3"), // ~1.333: 480x368
-		new PixelSizeToAspectRatio(128, 69, ASPECT_RATIO._17_9, "17:9"), // ~1.889: 1024x552
-		new PixelSizeToAspectRatio(30, 23, ASPECT_RATIO._11_9, "11:9"), // ~1.222: 592x480
-    };
-
     /**
      * A convenience method which makes it easy to determine the approximate
      * aspect ratio of an image with the given resolution (expressed in pixel
@@ -340,10 +363,12 @@ public class CameraPreferencesActivity extends PreferenceActivity implements
      * aspect ratio of an image with the given resolution (expressed in pixel
      * width and height).
      *
-     * @param w Width in pixels
-     * @param h Height in pixels
+     * @param w
+     *            Width in pixels
+     * @param h
+     *            Height in pixels
      * @return If a matching commonly-used aspect ratio can be found, returns
-     * string name for that aspect ratio.
+     *         string name for that aspect ratio.
      */
     public String findAspectRatioName(int w, int h) {
 
@@ -364,5 +389,35 @@ public class CameraPreferencesActivity extends PreferenceActivity implements
                 return aspectRatio.name;
         }
         return (w + ":" + h);
+    }
+
+    public enum ASPECT_RATIO {
+        _1_1, // 1.0
+        _11_9, // 1.222
+        _5_4, // 1.25
+        _4_3, // 1.333
+        _SQRROOT2_1, // 1.414
+        _3_2, // 1.5
+        _14_9, // 1.556
+        _8_5, // 1.6
+        _5_3, // 1.667
+        _16_9, // 1.778
+        _9_5, // 1.8
+        _17_9, // 1.889
+        _UNIQUE
+    }
+
+    private static final class PixelSizeToAspectRatio {
+        int width;
+        int height;
+        ASPECT_RATIO aspectRatio;
+        String name;
+
+        PixelSizeToAspectRatio(int w, int h, ASPECT_RATIO ar, String name) {
+            this.width = w;
+            this.height = h;
+            this.aspectRatio = ar;
+            this.name = name;
+        }
     }
 }
