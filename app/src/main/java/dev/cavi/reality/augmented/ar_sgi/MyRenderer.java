@@ -1,5 +1,7 @@
 package dev.cavi.reality.augmented.ar_sgi;
 
+import android.util.Log;
+
 import org.artoolkit.ar.base.ARToolKit;
 import org.artoolkit.ar.base.rendering.ARRenderer;
 import org.artoolkit.ar.base.rendering.Cube;
@@ -7,15 +9,20 @@ import org.artoolkit.ar.base.rendering.Cube;
 import javax.microedition.khronos.opengles.GL10;
 
 public class MyRenderer extends ARRenderer {
-    private int markerID = -1;
-    private Cube cube = new Cube(40.0f, 0.0f, 0.0f, 20.0f);
+    private String TAG = MyRenderer.class.getSimpleName();
+    private int markerHiro = -1;
+    private int markerKanji = -1;
+    private Cube cube1 = new Cube(50.0f, 0.0f, 0.0f, 20.0f);
+    private Cube cube2 = new Cube(60.0f, 0.0f, 0.0f, 10.0f);
     private float angle = 0.0f;
     private boolean spinning = false;
 
     @Override
     public boolean configureARScene() {
-        markerID = ARToolKit.getInstance().addMarker("single;Data/patt.hiro;80");
-        return markerID >= 0;
+        markerHiro = ARToolKit.getInstance().addMarker("single;Data/patt.hiro;80");
+        markerKanji = ARToolKit.getInstance().addMarker("single;Data/patt.kanji;80");
+
+        return markerHiro >= 0 && markerKanji >= 0;
     }
 
     public void click() {
@@ -35,12 +42,27 @@ public class MyRenderer extends ARRenderer {
 
         gl.glMatrixMode(GL10.GL_MODELVIEW);
 
-        if (ARToolKit.getInstance().queryMarkerVisible(markerID)) {
-            gl.glLoadMatrixf(ARToolKit.getInstance().queryMarkerTransformation(markerID), 0);
+        if (ARToolKit.getInstance().queryMarkerVisible(markerHiro)) {
+            Log.e(TAG, "MarkerHiro - Drawing");
+            gl.glLoadMatrixf(ARToolKit.getInstance().queryMarkerTransformation(markerHiro), 0);
 
             gl.glPushMatrix();
             gl.glRotatef(angle, 0.0f, 0.0f, 1.0f);
-            cube.draw(gl);
+            cube1.draw(gl);
+            gl.glPopMatrix();
+
+            if (spinning) {
+                angle += 5.0f;
+            }
+        }
+
+        if (ARToolKit.getInstance().queryMarkerVisible(markerKanji)) {
+            Log.e(TAG, "markerKanji - Drawing");
+            gl.glLoadMatrixf(ARToolKit.getInstance().queryMarkerTransformation(markerKanji), 0);
+
+            gl.glPushMatrix();
+            gl.glRotatef(angle, 0.0f, 0.0f, 1.0f);
+            cube2.draw(gl);
             gl.glPopMatrix();
 
             if (spinning) {
