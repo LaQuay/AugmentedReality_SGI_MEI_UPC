@@ -1,11 +1,12 @@
 # AugmentedReality_SGI_MEI_UPC
 
+This project was made in ARToolkit 5.3.2, official release, but with a tweaked version of the Android-ARWrapper.mk, included in the extras folder.
 
 ### How to compile ARToolkit
 
-Follow this steps:
+Follow this steps: https://www.artoolkit.org/documentation/doku.php?id=4_Android:android_native
 
-And when asked, add this in both .sh:
+And when asked, add this in both .sh (build.sh / build_native_examples.sh):
 
 ```bash
 export ANDROID_HOME='/c/Users/LaQuay/AppData/Local/Android/Sdk'
