@@ -1,6 +1,8 @@
 # AugmentedReality_SGI_MEI_UPC
 
-This project was made in ARToolkit 5.3.2, official release, but with a tweaked version of the Android-ARWrapper.mk, included in the extras folder.
+This project was made in ARToolkit 5.3.2, official release, but with some tweaked files:
+
+- Android-ARWrapper.mk, included in the extras folder.
 
 ### How to compile ARToolkit
 
@@ -15,3 +17,7 @@ export NDK=$ANDROID_NDK_ROOT
 export PATH=$PATH:$NDK
 export HOST_OS='MINGW64_NT-10.0'
 ```
+
+### Additional information
+
+If the build.sh didn't generate the compiled files, check the ABI in Application.mk of the project.
