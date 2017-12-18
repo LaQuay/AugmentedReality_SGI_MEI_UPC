@@ -1,28 +1,45 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.3"
 
     defaultConfig {
-        applicationId "dev.cavi.reality.augmented.ar_sgi"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        applicationId "dev.cavi.reality.augmented.arsgi"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode = 1       // Integer type incremented by 1 for every release, major or minor, to Google store
+        versionName = "1.0.0" // Real fully qualified major and minor release description
+
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        ndk {
+            moduleName = "arsgi"
+        }
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir 'src/main/libs'
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    //compile 'com.android.support:support-v4:23.0.1'   // Only required when the target device API level is greater than
+    //compile 'com.android.support:appcompat-v7:23.0.1' // the compile and target of the app being deployed to the device
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.4.0'
 
     compile project(':libs:aRBaseLib')
 }
