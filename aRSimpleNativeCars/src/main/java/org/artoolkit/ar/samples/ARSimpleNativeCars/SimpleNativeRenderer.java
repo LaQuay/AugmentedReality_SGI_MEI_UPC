@@ -17,8 +17,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class SimpleNativeRenderer extends ARRenderer {
-    private String TAG = SimpleNativeRenderer.class.getSimpleName();
-
     // Load the native libraries.
     static {
         System.loadLibrary("c++_shared");
@@ -26,7 +24,22 @@ public class SimpleNativeRenderer extends ARRenderer {
         System.loadLibrary("ARWrapperNativeCarsExample");
     }
 
+    private String TAG = SimpleNativeRenderer.class.getSimpleName();
     private FPSCounter counter = new FPSCounter();
+    private int markerA = -1;
+    private int markerB = -1;
+    private int markerC = -1;
+    private int markerD = -1;
+    private int markerG = -1;
+    private int markerF = -1;
+    private List<Integer> markerArray = new ArrayList<>();
+    private Cube cube1 = new Cube(10.0f, 0.0f, 0.0f, 20.0f);
+    private Cube cube2 = new Cube(20.0f, 0.0f, 0.0f, 20.0f);
+    private Cube cube3 = new Cube(30.0f, 0.0f, 0.0f, 20.0f);
+    private Cube cube4 = new Cube(40.0f, 0.0f, 0.0f, 20.0f);
+    private Cube cube5 = new Cube(50.0f, 0.0f, 0.0f, 20.0f);
+    private Cube cube6 = new Cube(60.0f, 0.0f, 0.0f, 20.0f);
+    private float angle = 0.0f;
 
     public static native void demoInitialise();
 
@@ -37,22 +50,6 @@ public class SimpleNativeRenderer extends ARRenderer {
     public static native void demoSurfaceChanged(int w, int h);
 
     public static native void demoDrawFrame();
-
-    private int markerA = -1;
-    private int markerB = -1;
-    private int markerC = -1;
-    private int markerD = -1;
-    private int markerG = -1;
-    private int markerF = -1;
-    private List<Integer> markerArray = new ArrayList<>();
-
-    private Cube cube1 = new Cube(10.0f, 0.0f, 0.0f, 20.0f);
-    private Cube cube2 = new Cube(20.0f, 0.0f, 0.0f, 20.0f);
-    private Cube cube3 = new Cube(30.0f, 0.0f, 0.0f, 20.0f);
-    private Cube cube4 = new Cube(40.0f, 0.0f, 0.0f, 20.0f);
-    private Cube cube5 = new Cube(50.0f, 0.0f, 0.0f, 20.0f);
-    private Cube cube6 = new Cube(60.0f, 0.0f, 0.0f, 20.0f);
-    private float angle = 0.0f;
 
     /**
      * By overriding {@link #configureARScene}, the markers and other settings can be configured
@@ -136,7 +133,6 @@ public class SimpleNativeRenderer extends ARRenderer {
     private void workWithVisibleMarkers(GL10 gl, Map<Integer, float[]> transformationArray) {
         for (Map.Entry<Integer, float[]> entry : transformationArray.entrySet()) {
             if (entry.getKey() == markerA) {
-                Log.e(TAG, "markerA - Drawing");
                 gl.glLoadMatrixf(entry.getValue(), 0);
 
                 gl.glPushMatrix();
@@ -146,7 +142,6 @@ public class SimpleNativeRenderer extends ARRenderer {
             }
 
             if (entry.getKey() == markerB) {
-                Log.e(TAG, "markerB - Drawing");
                 gl.glLoadMatrixf(entry.getValue(), 0);
 
                 gl.glPushMatrix();
@@ -156,7 +151,6 @@ public class SimpleNativeRenderer extends ARRenderer {
             }
 
             if (entry.getKey() == markerC) {
-                Log.e(TAG, "markerC - Drawing");
                 gl.glLoadMatrixf(entry.getValue(), 0);
 
                 gl.glPushMatrix();
@@ -166,7 +160,6 @@ public class SimpleNativeRenderer extends ARRenderer {
             }
 
             if (entry.getKey() == markerD) {
-                Log.e(TAG, "markerD - Drawing");
                 gl.glLoadMatrixf(entry.getValue(), 0);
 
                 gl.glPushMatrix();
@@ -176,7 +169,6 @@ public class SimpleNativeRenderer extends ARRenderer {
             }
 
             if (entry.getKey() == markerF) {
-                Log.e(TAG, "markerF - Drawing");
                 gl.glLoadMatrixf(entry.getValue(), 0);
 
                 gl.glPushMatrix();
@@ -186,7 +178,6 @@ public class SimpleNativeRenderer extends ARRenderer {
             }
 
             if (entry.getKey() == markerG) {
-                Log.e(TAG, "markerG - Drawing");
                 gl.glLoadMatrixf(entry.getValue(), 0);
 
                 gl.glPushMatrix();
