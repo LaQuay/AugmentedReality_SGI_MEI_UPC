@@ -66,7 +66,6 @@ class CameraWrapper {
     private boolean usingBuffers = false;
 
     public CameraWrapper(Camera cam) {
-
         camera = cam;
 
         try {
@@ -81,23 +80,17 @@ class CameraWrapper {
 
             addCallbackBufferMethod = cameraClass.getDeclaredMethod("addCallbackBuffer", byte[].class);
             Log.i(TAG, "CameraWrapper(): Found method addCallbackBuffer");
-
         } catch (NoSuchMethodException nsme) {
             Log.w(TAG, "CameraWrapper(): Could not find method: " + nsme.getMessage());
-
-
         } catch (ClassNotFoundException cnfe) {
             Log.w(TAG, "CameraWrapper(): Could not find class " + CAMERA_CLASS_NAME);
         }
-
     }
 
     public boolean configureCallback(Camera.PreviewCallback cb, boolean useBuffersIfAvailable, int numBuffersIfAvailable, int bufferSize) {
-
         boolean success = true;
 
         if (useBuffersIfAvailable && setPreviewCallbackWithBufferMethod != null && addCallbackBufferMethod != null) {
-
             success &= setPreviewCallbackWithBuffer(cb);
 
             for (int i = 0; i < numBuffersIfAvailable; i++) {
@@ -105,32 +98,23 @@ class CameraWrapper {
             }
 
             usingBuffers = true;
-
         } else {
-
             success &= setPreviewCallback(cb);
 
             usingBuffers = false;
-
         }
 
         if (success) {
-
             if (usingBuffers) {
                 Log.i(TAG, "configureCallback(): Configured camera callback using " + numBuffersIfAvailable + " buffers of " + bufferSize + " bytes");
             } else {
                 Log.i(TAG, "configureCallback(): Configured camera callback without buffers");
             }
-
         }
-
-
         return success;
-
     }
 
     public boolean frameReceived(byte[] data) {
-
         //Log.d(TAG, "frameReceived");
         if (usingBuffers) {
             return addCallbackBuffer(data);
@@ -140,13 +124,10 @@ class CameraWrapper {
     }
 
     private boolean setPreviewCallback(Camera.PreviewCallback cb) {
-
-        if (setPreviewCallbackMethod == null) return false;
-
+        if (setPreviewCallbackMethod == null)
+            return false;
         try {
-
             setPreviewCallbackMethod.invoke(camera, cb);
-
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return false;
@@ -163,13 +144,10 @@ class CameraWrapper {
     }
 
     private boolean setPreviewCallbackWithBuffer(Camera.PreviewCallback cb) {
-
-        if (setPreviewCallbackMethod == null) return false;
-
+        if (setPreviewCallbackMethod == null)
+            return false;
         try {
-
             setPreviewCallbackWithBufferMethod.invoke(camera, cb);
-
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return false;
@@ -180,21 +158,15 @@ class CameraWrapper {
             e.printStackTrace();
             return false;
         }
-
         return true;
     }
-
 
     private boolean addCallbackBuffer(byte[] data) {
-
-        if (addCallbackBufferMethod == null) return false;
-
+        if (addCallbackBufferMethod == null)
+            return false;
         try {
-
             addCallbackBufferMethod.invoke(camera, data);
-
             //Log.d(TAG, "Returned camera data buffer to pool");
-
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return false;
@@ -205,8 +177,6 @@ class CameraWrapper {
             e.printStackTrace();
             return false;
         }
-
         return true;
     }
-
 }

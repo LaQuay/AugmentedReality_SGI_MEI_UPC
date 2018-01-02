@@ -100,7 +100,6 @@ public class AndroidUtils {
         return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 
-
     /**
      * Returns the number of bytes of external storage available.
      *
@@ -135,7 +134,6 @@ public class AndroidUtils {
         }
     }
 
-
     /**
      * Returns a formatted string representation of the number of bytes specified. The largest
      * suitable suffix up until GB will be used, with the returned value expressed to two
@@ -165,7 +163,6 @@ public class AndroidUtils {
 
         DecimalFormat df = new DecimalFormat("###.##");
         return df.format(val) + " " + units;
-
     }
 
     /**
@@ -175,7 +172,6 @@ public class AndroidUtils {
      * @param activity The Activity to report on.
      */
     public static void reportDisplayInformation(Activity activity) {
-
         DisplayMetrics metrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -197,8 +193,5 @@ public class AndroidUtils {
 
         Log.i(TAG, "reportDisplayInformation(): Display is " + displayWidth + "x" + displayHeight
                 + ", Density: " + density);
-
     }
-
-
 }

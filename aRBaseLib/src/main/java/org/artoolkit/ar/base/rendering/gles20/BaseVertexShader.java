@@ -48,7 +48,6 @@ import android.opengl.GLES20;
  * call this one from your fragment shader implementation.
  */
 public class BaseVertexShader implements OpenGLShader {
-
     private String vertexShaderSource =
             "uniform mat4 u_MVPMatrix; \n"     // A constant representing the combined model/view/projection matrix.
 

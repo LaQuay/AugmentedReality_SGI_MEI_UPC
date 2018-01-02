@@ -42,7 +42,6 @@ import org.artoolkit.ar.base.rendering.Line;
  * Created by Thorsten Bux on 15.01.2016.
  */
 public class LineGLES20 extends Line implements ARDrawableOpenGLES20 {
-
     private ShaderProgram shaderProgram;
 
     /**

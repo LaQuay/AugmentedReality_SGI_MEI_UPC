@@ -79,5 +79,4 @@ public class BaseShaderProgram extends ShaderProgram {
                 position.length * 4, 0);
         GLES20.glEnableVertexAttribArray(this.getPositionHandle());
     }
-
 }

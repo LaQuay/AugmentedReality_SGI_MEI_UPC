@@ -38,7 +38,6 @@
 package org.artoolkit.ar.base.assets;
 
 public class HashComputationException extends Exception {
-
     private static final long serialVersionUID = 1L;
 
     public HashComputationException(String message) {
@@ -48,5 +47,4 @@ public class HashComputationException extends Exception {
     public HashComputationException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

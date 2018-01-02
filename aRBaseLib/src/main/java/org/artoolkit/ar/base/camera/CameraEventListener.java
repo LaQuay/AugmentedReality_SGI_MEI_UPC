@@ -42,7 +42,6 @@ package org.artoolkit.ar.base.camera;
  * from a {@link CaptureCameraPreview}.
  */
 public interface CameraEventListener {
-
     /**
      * Called when the camera preview is started. The video dimensions and frame rate
      * are passed through, along with information about the camera.
@@ -66,5 +65,4 @@ public interface CameraEventListener {
      * Called when the capture preview is stopped. No new frames will be sent.
      */
     void cameraPreviewStopped();
-
 }

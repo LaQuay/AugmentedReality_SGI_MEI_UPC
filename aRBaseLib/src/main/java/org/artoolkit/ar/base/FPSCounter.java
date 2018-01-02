@@ -42,7 +42,6 @@ package org.artoolkit.ar.base;
  * capture or graphics rendering.
  */
 public class FPSCounter {
-
     /**
      * The number of frames that have occurred in the current time period.
      */
@@ -97,7 +96,6 @@ public class FPSCounter {
         }
 
         return false;
-
     }
 
     /**
@@ -118,5 +116,4 @@ public class FPSCounter {
     public String toString() {
         return "FPS: " + currentFPS;
     }
-
 }

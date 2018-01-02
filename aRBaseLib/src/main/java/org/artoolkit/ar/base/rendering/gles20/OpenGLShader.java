@@ -43,7 +43,6 @@ package org.artoolkit.ar.base.rendering.gles20;
  * are provided.
  */
 public interface OpenGLShader {
-
     //These properties are used to make the connection between the code and the shader. We use them
     //to link the projection and model matrix to the shader and to pass these matrices to the shader
     //from the AR application.
@@ -56,5 +55,4 @@ public interface OpenGLShader {
     int configureShader();
 
     void setShaderSource(String source);
-
 }

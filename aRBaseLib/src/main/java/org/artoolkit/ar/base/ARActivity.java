@@ -82,7 +82,6 @@ import org.artoolkit.ar.base.rendering.gles20.ARRendererGLES20;
  */
 
 public abstract class ARActivity extends Activity implements CameraEventListener {
-
     /**
      * Android logging tag for this class.
      */
@@ -142,7 +141,6 @@ public abstract class ARActivity extends Activity implements CameraEventListener
 
     @Override
     protected void onStart() {
-
         super.onStart();
 
         Log.i(TAG, "onStart(): Activity starting.");
@@ -379,7 +377,6 @@ public abstract class ARActivity extends Activity implements CameraEventListener
 
     @Override
     public void cameraPreviewFrame(byte[] frame) {
-
         if (firstUpdate) {
             // ARToolKit has been initialised. The renderer can now add markers, etc...
             if (renderer.configureARScene()) {
@@ -399,7 +396,6 @@ public abstract class ARActivity extends Activity implements CameraEventListener
 
             onFrameProcessed();
         }
-
     }
 
     public void onFrameProcessed() {
@@ -411,7 +407,6 @@ public abstract class ARActivity extends Activity implements CameraEventListener
     }
 
     protected void showInfo() {
-
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
         dialogBuilder.setMessage("ARToolKit Version: " + NativeInterface.arwGetARToolKitVersion());
@@ -426,8 +421,5 @@ public abstract class ARActivity extends Activity implements CameraEventListener
         AlertDialog alert = dialogBuilder.create();
         alert.setTitle("ARToolKit");
         alert.show();
-
-
     }
-
 }

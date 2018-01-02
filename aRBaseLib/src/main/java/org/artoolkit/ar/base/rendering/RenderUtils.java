@@ -44,7 +44,6 @@ import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 public class RenderUtils {
-
     public static FloatBuffer buildFloatBuffer(float[] arr) {
         ByteBuffer bb = ByteBuffer.allocateDirect(arr.length * 4);
         bb.order(ByteOrder.nativeOrder());
@@ -78,6 +77,4 @@ public class RenderUtils {
         bb.position(0);
         return bb;
     }
-
-
 }

@@ -54,12 +54,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//import java.security.MessageDigest;
-//import java.security.NoSuchAlgorithmException;
-
-//import java.security.MessageDigest;
-//import java.security.NoSuchAlgorithmException;
-
 public class AssetHelper {
 
     private static final String TAG = "AssetHelper";
@@ -67,14 +61,10 @@ public class AssetHelper {
     private AssetManager manager;
 
     public AssetHelper(AssetManager am) {
-
         manager = am;
-
     }
 
-
     public List<AssetFileTransfer> copyAssetFolder(String assetBasePath, String targetDirPath) {
-
         Set<String> filenames = getAssetFilenames(assetBasePath);
         List<AssetFileTransfer> transfers = new ArrayList<AssetFileTransfer>();
 
@@ -100,7 +90,6 @@ public class AssetHelper {
     }
 
     public void cacheAssetFolder(Context ctx, String assetBasePath) {
-
         // If the folder has already been cached, we will inspect the cache.
         // If it's all OK, we'll return nice and quickly. Otherwise, any previous
         // cached version will be removed and then a new copy of the folder written
@@ -185,7 +174,6 @@ public class AssetHelper {
         } else {
             Log.i(TAG, "cacheAssetFolder(): Using cached folder '" + assetBasePath + "'.");
         }
-
     }
 
     public Set<String> getAssetFilenames(String path) {
@@ -218,5 +206,4 @@ public class AssetHelper {
             ioe.printStackTrace();
         }
     }
-
 }

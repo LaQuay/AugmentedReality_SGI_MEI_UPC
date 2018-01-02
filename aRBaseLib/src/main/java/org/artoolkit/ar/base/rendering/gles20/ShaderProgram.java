@@ -62,7 +62,6 @@ import java.nio.FloatBuffer;
  * Finally it renders the given geometry.
  */
 public abstract class ShaderProgram {
-
     /* Size of the position data in elements. */
     protected final int positionDataSize = 3;
 
@@ -70,7 +69,6 @@ public abstract class ShaderProgram {
     protected final int colorDataSize = 4;
     /* How many bytes per float. */
     protected final int mBytesPerFloat = Float.SIZE / 8;
-
 
     /* How many elements per vertex in bytes*/
     protected final int positionStrideBytes = positionDataSize * mBytesPerFloat;

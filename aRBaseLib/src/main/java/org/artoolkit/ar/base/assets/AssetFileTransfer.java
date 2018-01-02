@@ -84,7 +84,6 @@ public class AssetFileTransfer {
 
 
     public void copyAssetToTargetDir(AssetManager manager, String assetFilePath, String targetDirPath) throws AssetFileTransferException {
-
         assetFile = new File(assetFilePath);
 
         InputStream in;
@@ -104,7 +103,6 @@ public class AssetFileTransfer {
         Log.i(TAG, "copyAssetToTargetDir(): [" + assetFilePath + "] -> [" + targetFile.getPath() + "]");
 
         if (targetFileAlreadyExists) {
-
             //Log.i(TAG, "Target file exists. Unpacking to temporary file first.");
 
             // Create temporary file to unpack to
@@ -145,14 +143,12 @@ public class AssetFileTransfer {
             }
 
             if (tempFileCRC == targetFileCRC) {
-
                 // The hashes match. The files are the same, so don't need to do anything.
                 //Log.i(TAG, "The hashes match. Keeping existing file, removing temp file.");
                 // Clean up temporary file
                 tempFile.delete();
 
             } else {
-
                 // The hashes do not match. Overwrite the existing file with the new one.
                 targetFile.delete();
                 //Log.i(TAG, "Deleted existing file");
@@ -162,7 +158,6 @@ public class AssetFileTransfer {
             }
 
         } else {
-
             Log.i(TAG, "copyAssetToTargetDir(): Target file does not exist. Creating directory structure.");
 
             // Ensure parent directories exist so we can create the file

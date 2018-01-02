@@ -45,7 +45,6 @@ import android.util.Log;
  * the {@link ARToolKit} class rather than called directly.
  */
 public class NativeInterface {
-
     public static final int ARW_MARKER_OPTION_FILTERED = 1,
             ARW_MARKER_OPTION_FILTER_SAMPLE_RATE = 2,
             ARW_MARKER_OPTION_FILTER_CUTOFF_FREQ = 3,
@@ -391,5 +390,4 @@ public class NativeInterface {
     public static native void arwSetImageProcMode(int mode);
 
     public static native int arwGetImageProcMode();
-
 }

@@ -47,7 +47,6 @@ import javax.microedition.khronos.opengles.GL10;
  * Created by Thorsten Bux on 15.01.2016.
  */
 public class Line {
-
     int vertexLength = 3; //We only work with position vectors with three elements
     private float[] start = new float[3];
     private float[] end = new float[3];
@@ -76,7 +75,6 @@ public class Line {
     }
 
     protected void setArrays() {
-
         float[] vertices = new float[vertexLength * 2];
 
         for (int i = 0; i < vertexLength; i++) {
@@ -136,7 +134,6 @@ public class Line {
             this.end = end;
     }
 
-
     public float[] getColor() {
         return color;
     }
@@ -144,7 +141,6 @@ public class Line {
     public void setColor(float[] color) {
         this.color = color;
     }
-
 
     public FloatBuffer getmColorBuffer() {
         return mColorBuffer;

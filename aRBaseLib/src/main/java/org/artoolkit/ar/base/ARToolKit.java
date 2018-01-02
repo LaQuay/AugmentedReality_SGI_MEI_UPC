@@ -49,7 +49,6 @@ import android.util.Log;
  * and correct type conversion can take place.
  */
 public class ARToolKit {
-
     /**
      * Android logging tag for this class.
      */
@@ -175,7 +174,6 @@ public class ARToolKit {
      * @return The debug image Bitmap.
      */
     public Bitmap updateDebugBitmap() {
-
         if (!initedNative) return null;
 
         if (!NativeInterface.arwUpdateDebugTexture(debugImageData, false)) {
@@ -199,7 +197,6 @@ public class ARToolKit {
         debugBitmap.setPixels(debugImageColors, 0, w, 0, 0, w, h);
 
         return debugBitmap;
-
     }
 
     /**
@@ -425,5 +422,4 @@ public class ARToolKit {
         }
         return null;
     }
-
 }

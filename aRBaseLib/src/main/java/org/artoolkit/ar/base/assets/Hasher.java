@@ -45,10 +45,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.zip.CRC32;
 
-//import android.util.Log;
-
 public class Hasher {
-
     //private final static String TAG = "Hasher";
 
     private final static String HEX = "0123456789ABCDEF";
@@ -67,7 +64,6 @@ public class Hasher {
     }
 
     public static long computeCRC(String filename) throws HashComputationException {
-
         InputStream in = null;
         byte[] buffer = new byte[16384];
         int bytesRead = -1;
@@ -97,25 +93,20 @@ public class Hasher {
         //Log.i(TAG, "CRC result of " + filename + ": " + value);
 
         return value;
-
     }
 
-
     public static String computeHash(String filename) throws HashComputationException, IOException {
-
         InputStream in = null;
         MessageDigest digest = null;
         String algorithm = "SHA-1";
         byte[] buffer = new byte[16384];
         int bytesRead = -1;
 
-
         try {
             in = new FileInputStream(filename);
         } catch (FileNotFoundException fnfe) {
             throw new HashComputationException("File not found: " + filename, fnfe);
         }
-
 
         try {
             digest = MessageDigest.getInstance(algorithm);
@@ -148,7 +139,5 @@ public class Hasher {
         //Log.i(TAG, "Hash result of " + filename + ": " + hash);
 
         return hash;
-
     }
-
 }

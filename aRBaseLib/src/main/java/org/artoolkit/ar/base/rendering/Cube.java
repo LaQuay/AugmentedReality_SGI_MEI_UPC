@@ -48,7 +48,6 @@ import javax.microedition.khronos.opengles.GL10;
  * Simple class to render a coloured cube.
  */
 public class Cube {
-
     private FloatBuffer mVertexBuffer;
     private FloatBuffer mColorBuffer;
     private ByteBuffer mIndexBuffer;
@@ -78,7 +77,6 @@ public class Cube {
     }
 
     private void setArrays(float size, float x, float y, float z) {
-
         float hs = size / 2.0f;
 
         float vertices[] = {
@@ -113,16 +111,12 @@ public class Cube {
                 3, 0, 1, 3, 1, 2
         };
 
-
         mVertexBuffer = RenderUtils.buildFloatBuffer(vertices);
         mColorBuffer = RenderUtils.buildFloatBuffer(colors);
         mIndexBuffer = RenderUtils.buildByteBuffer(indices);
-
     }
 
     public void draw(GL10 unused) {
-
-
         GLES10.glColorPointer(4, GLES10.GL_FLOAT, 0, mColorBuffer);
         GLES10.glVertexPointer(3, GLES10.GL_FLOAT, 0, mVertexBuffer);
 
@@ -133,8 +127,5 @@ public class Cube {
 
         GLES10.glDisableClientState(GLES10.GL_COLOR_ARRAY);
         GLES10.glDisableClientState(GLES10.GL_VERTEX_ARRAY);
-
     }
-
-
 }
