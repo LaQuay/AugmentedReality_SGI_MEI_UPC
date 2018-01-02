@@ -52,10 +52,6 @@ import org.artoolkit.ar.base.R;
 
 import java.io.IOException;
 
-//import java.util.List;
-
-//import java.util.List;
-
 @SuppressLint("ViewConstructor")
 public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.Callback, Camera.PreviewCallback {
 
@@ -110,7 +106,6 @@ public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.C
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS); // Deprecated in API level 11. Still required for API levels <= 10.
 
         setCameraEventListener(cel);
-
     }
 
     /**
@@ -123,11 +118,9 @@ public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.C
         listener = cel;
     }
 
-
     @SuppressLint("NewApi")
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
         int cameraIndex = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("pref_cameraIndex", "0"));
         Log.i(TAG, "surfaceCreated(): Opening camera " + (cameraIndex + 1));
         try {
@@ -143,9 +136,7 @@ public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.C
         Log.i(TAG, "surfaceCreated(): Camera open");
 
         try {
-
             camera.setPreviewDisplay(holder);
-
         } catch (IOException exception) {
             Log.e(TAG, "surfaceCreated(): IOException setting display holder");
             camera.release();
@@ -153,7 +144,6 @@ public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.C
             Log.i(TAG, "surfaceCreated(): Released camera");
             return;
         }
-
     }
 
     @Override
@@ -163,7 +153,6 @@ public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.C
         // important to release it when the activity is paused.
 
         if (camera != null) {
-
             camera.setPreviewCallback(null);
             camera.stopPreview();
 
@@ -171,15 +160,13 @@ public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.C
             camera = null;
         }
 
-        if (listener != null) listener.cameraPreviewStopped();
-
+        if (listener != null)
+            listener.cameraPreviewStopped();
     }
-
 
     @SuppressWarnings("deprecation") // setPreviewFrameRate, getPreviewFrameRate
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-
         if (camera == null) {
             // Camera wasn't opened successfully?
             Log.e(TAG, "surfaceChanged(): No camera in surfaceChanged");
@@ -219,24 +206,26 @@ public class CaptureCameraPreview extends SurfaceView implements SurfaceHolder.C
 
         camera.startPreview();
 
+        camera.autoFocus(new Camera.AutoFocusCallback() {
+            @Override
+            public void onAutoFocus(boolean success, Camera camera) {
+                Log.i(TAG, "Autofocused....");
+            }
+        });
+
         if (listener != null)
             listener.cameraPreviewStarted(captureWidth, captureHeight, captureRate, cameraIndex, cameraIsFrontFacing);
-
     }
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-
-        if (listener != null) listener.cameraPreviewFrame(data);
+        if (listener != null)
+            listener.cameraPreviewFrame(data);
 
         cameraWrapper.frameReceived(data);
-
 
         if (fpsCounter.frame()) {
             Log.i(TAG, "onPreviewFrame(): Camera capture FPS: " + fpsCounter.getFPS());
         }
-
-
     }
-
 }
