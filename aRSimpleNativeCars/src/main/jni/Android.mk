@@ -53,7 +53,9 @@ LOCAL_PATH := $(MY_LOCAL_PATH)
 # Pull ARWrapper and any other required libs into the build
 include $(CLEAR_VARS)
 #ARTOOLKIT_DIR := $(MY_LOCAL_PATH)/../../../../../../android
-ARTOOLKIT_DIR := E:\ARToolKit5-bin-5.3.2-Android\android
+
+ARTOOLKIT_DIR := C:\Users\Robert\repos\ARToolKit5-bin-5.3.2-Android\android
+
 ARTOOLKIT_LIBDIR := $(call host-path, $(ARTOOLKIT_DIR)/obj/local/$(TARGET_ARCH_ABI))
 ARTOOLKIT_LIBDIR2 := $(call host-path, $(ARTOOLKIT_DIR)/libs/$(TARGET_ARCH_ABI))
 define add_static_module
