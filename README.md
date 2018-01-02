@@ -24,10 +24,8 @@ Some tweaked files:
 ### How to compile with Android Studio
 
 - Git clone.
+- Inside aRSimpleNativeCars\src\main\jni, rename Android.example.mk to Android.mk
 - Change the ARTOOLKIT_DIR in Android.mk of the project. It should point to {ARKToolkit}/android
-
-#### If deprecation warnings while compiling
-It's ok, no problem, future change.
 
 ### Additional information
 
