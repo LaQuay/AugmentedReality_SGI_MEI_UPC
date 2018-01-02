@@ -58,3 +58,4 @@ freeline_project_description.json
 #.so Libs
 aRSimpleNativeCars/src/main/libs/
 *.so
+aRSimpleNativeCars/src/main/jni/Android.mk
