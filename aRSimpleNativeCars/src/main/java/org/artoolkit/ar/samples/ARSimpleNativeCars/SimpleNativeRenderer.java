@@ -5,6 +5,8 @@ import android.util.Log;
 import org.artoolkit.ar.base.FPSCounter;
 import org.artoolkit.ar.base.rendering.ARRenderer;
 
+import java.util.Arrays;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -28,6 +30,12 @@ public class SimpleNativeRenderer extends ARRenderer {
     public static native void demoSurfaceChanged(int w, int h);
 
     public static native void demoDrawFrame();
+
+    public static native int[] getArrayMarkersID();
+
+    public static void changeScaleModel(int idModel, float scaleX, float scaleY, float scaleZ) {
+
+    }
 
     /**
      * By overriding {@link #configureARScene}, the markers and other settings can be configured
@@ -59,6 +67,8 @@ public class SimpleNativeRenderer extends ARRenderer {
         SimpleNativeRenderer.demoDrawFrame();
 
         if (counter.frame()) Log.i("demo", counter.toString());
+
+        Log.e(TAG, "COUNT: " + Arrays.toString(SimpleNativeRenderer.getArrayMarkersID()));
     }
 }
 

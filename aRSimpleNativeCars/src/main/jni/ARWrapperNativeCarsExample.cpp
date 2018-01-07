@@ -26,13 +26,19 @@ JNIFUNCTION_DEMO(demoSurfaceChanged(JNIEnv * env, jobject
 JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
                          obj));
+
+JNIEXPORT jintArray JNICALL
+JNIFUNCTION_DEMO(getArrayMarkersID(JNIEnv * env, jobject
+                         obj));
 };
+
 
 typedef struct ARModel {
     int patternID;
     ARdouble transformationMatrix[16];
     bool visible;
     GLMmodel *obj;
+    ARdouble offset;
 } ARModel;
 
 #define NUM_MODELS 4
@@ -179,4 +185,19 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
             glmDrawArrays(models[i].obj, 0);
         }
     }
+}
+
+JNIEXPORT jintArray JNICALL
+JNIFUNCTION_DEMO(getArrayMarkersID(JNIEnv * env, jobject
+                         obj)) {
+    jintArray newArray = env->NewIntArray(NUM_MODELS);
+    jint *idArray = env->GetIntArrayElements(newArray, NULL);
+
+    for (int i = 0; i < NUM_MODELS; i++) {
+        idArray[i] = models[i].patternID;
+    }
+
+    env->ReleaseIntArrayElements(newArray, idArray, NULL);
+
+    return newArray;
 }
