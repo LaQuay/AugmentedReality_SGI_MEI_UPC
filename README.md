@@ -2,12 +2,16 @@
 
 This project was made in ARToolkit 5.3.2, official release.
 
-### How to compile ARToolkit directly
-
 Follow this steps: https://www.artoolkit.org/documentation/doku.php?id=4_Android:android_native
 
-And when asked, add this in both .sh (build.sh / build_native_examples.sh):
+### How to compile with Android Studio
 
+- Git clone.
+- Inside aRSimpleNativeCars\src\main\jni, rename Android.example.mk to Android.mk
+- Change the ARTOOLKIT_DIR in Android.mk of the project. It should point to {ARKToolkit}/android
+- Add your own EXPORTS to the {ARKTOOLKIT}/android .sh files (build.sh / build_native_examples.sh)
+
+(Use the same EXPORT key, but use your own value)
 ```bash
 export ANDROID_HOME='/c/.../AppData/Local/Android/Sdk'
 export ANDROID_SDK_HOME='/c/.../AppData/Local/Android/Sdk'
@@ -16,16 +20,6 @@ export ANDROID_NDK=$ANDROID_HOME'/ndk-bundle'
 export NDK=$ANDROID_HOME'/ndk-bundle'
 export HOST_OS='MINGW64_NT-10.0'
 ```
-
-Some tweaked files:
-
-- Android-ARWrapper.mk, included in the extras folder.
-
-### How to compile with Android Studio
-
-- Git clone.
-- Inside aRSimpleNativeCars\src\main\jni, rename Android.example.mk to Android.mk
-- Change the ARTOOLKIT_DIR in Android.mk of the project. It should point to {ARKToolkit}/android
 
 ### Additional information
 
