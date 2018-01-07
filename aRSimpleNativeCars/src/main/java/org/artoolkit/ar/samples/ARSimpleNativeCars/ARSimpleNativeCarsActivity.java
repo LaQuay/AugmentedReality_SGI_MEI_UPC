@@ -2,9 +2,12 @@ package org.artoolkit.ar.samples.ARSimpleNativeCars;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -25,6 +28,12 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
     private TextView leftRotation;
     private TextView upRotation;
     private TextView downRotation;
+    private TextView nextElement;
+    private TextView previousElement;
+
+    private int[] idsArray;
+    private Handler handler = new Handler();
+    private int posMarkerSelected;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,33 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
                 }).check();
 
         setElements();
+        setUpListeners();
+
+        // No es sincrono, así que trabajar a partir de aquí
+        final Runnable r = new Runnable() {
+            public void run() {
+                if (SimpleNativeRenderer.isInitialized()) {
+                    Log.e(TAG, "Initialized");
+                    startCode();
+                } else {
+                    Log.e(TAG, "NOT Initialized");
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        };
+
+        handler.postDelayed(r, 500);
+    }
+
+    private void startCode() {
+        idsArray = SimpleNativeRenderer.getArrayMarkersID();
+
+        if (idsArray.length > 0) {
+            posMarkerSelected = idsArray[0];
+            SimpleNativeRenderer.selectMarkerByID(posMarkerSelected);
+        } else {
+            Toast.makeText(this, "Failed to initialize MarkersArray", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setElements() {
@@ -61,6 +97,9 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
         leftRotation = (TextView) controlLayout.findViewById(R.id.control_left_rotation_textbutton);
         upRotation = (TextView) controlLayout.findViewById(R.id.control_up_rotation_textbutton);
         downRotation = (TextView) controlLayout.findViewById(R.id.control_down_rotation_textbutton);
+
+        nextElement = (TextView) controlLayout.findViewById(R.id.control_next_element_textbutton);
+        previousElement = (TextView) controlLayout.findViewById(R.id.control_previous_element_textbutton);
     }
 
     private void setUpListeners() {
@@ -75,6 +114,62 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
 
             }
         });
+
+        rightRotation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+
+        leftRotation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+
+        upRotation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+
+        downRotation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+
+        nextElement.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                selectNextModel();
+            }
+        });
+
+        previousElement.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                selectPreviousModel();
+            }
+        });
+    }
+
+    private void selectNextModel() {
+        if (posMarkerSelected == idsArray.length - 1) {
+            posMarkerSelected = idsArray[0];
+        } else {
+            posMarkerSelected = idsArray[posMarkerSelected + 1];
+        }
+        SimpleNativeRenderer.selectMarkerByID(posMarkerSelected);
+        Log.e(TAG, "Selecting: " + posMarkerSelected);
+    }
+
+    private void selectPreviousModel() {
+        if (posMarkerSelected == 0) {
+            posMarkerSelected = idsArray[idsArray.length - 1];
+        } else {
+            posMarkerSelected = idsArray[posMarkerSelected - 1];
+        }
+        SimpleNativeRenderer.selectMarkerByID(posMarkerSelected);
+        Log.e(TAG, "Selecting: " + posMarkerSelected);
     }
 
     public void onStop() {

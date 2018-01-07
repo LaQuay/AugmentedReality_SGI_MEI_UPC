@@ -5,12 +5,12 @@ import android.util.Log;
 import org.artoolkit.ar.base.FPSCounter;
 import org.artoolkit.ar.base.rendering.ARRenderer;
 
-import java.util.Arrays;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class SimpleNativeRenderer extends ARRenderer {
+    private static boolean initialized = false;
+
     // Load the native libraries.
     static {
         System.loadLibrary("c++_shared");
@@ -33,8 +33,14 @@ public class SimpleNativeRenderer extends ARRenderer {
 
     public static native int[] getArrayMarkersID();
 
+    public static native void selectMarkerByID(int id);
+
     public static void changeScaleModel(int idModel, float scaleX, float scaleY, float scaleZ) {
 
+    }
+
+    static boolean isInitialized() {
+        return initialized;
     }
 
     /**
@@ -64,11 +70,14 @@ public class SimpleNativeRenderer extends ARRenderer {
 
     @Override
     public void draw(GL10 gl) {
+        if (!initialized) {
+            initialized = true;
+        }
+
         SimpleNativeRenderer.demoDrawFrame();
 
-        if (counter.frame()) Log.i("demo", counter.toString());
-
-        Log.e(TAG, "COUNT: " + Arrays.toString(SimpleNativeRenderer.getArrayMarkersID()));
+        if (counter.frame())
+            Log.i("demo", counter.toString());
     }
 }
 

@@ -76,4 +76,33 @@
             android:text="v"
             android:textSize="40sp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/control_next_element_textbutton"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:background="#da26a69a"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Next"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/control_previous_element_textbutton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:background="#da26a69a"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Previous"
+            android:textSize="20sp" />
+    </LinearLayout>
 </RelativeLayout>

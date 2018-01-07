@@ -30,6 +30,11 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
 JNIEXPORT jintArray JNICALL
 JNIFUNCTION_DEMO(getArrayMarkersID(JNIEnv * env, jobject
                          obj));
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
+                         obj, jint
+                         id));
 };
 
 
@@ -39,6 +44,7 @@ typedef struct ARModel {
     bool visible;
     GLMmodel *obj;
     ARdouble offset;
+    bool selected;
 } ARModel;
 
 #define NUM_MODELS 4
@@ -171,12 +177,22 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
 
     glEnable(GL_LIGHT0);
 
+    //LOGE("Models selected '%d' '%d' '%d' '%d'",
+    //     models[0].selected, models[1].selected, models[2].selected, models[3].selected);
+
     for (int i = 0; i < NUM_MODELS; i++) {
         models[i].visible = arwQueryMarkerTransformation(models[i].patternID,
                                                          models[i].transformationMatrix);
-
         if (models[i].visible) {
             glLoadMatrixf(models[i].transformationMatrix);
+
+            float lightDiffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+            if (models[i].selected) {
+                lightDiffuse[0] = 0.0f;
+                lightDiffuse[1] = 1.0f;
+                lightDiffuse[2] = 0.0f;
+                lightDiffuse[3] = 0.0f;
+            }
 
             glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
             glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
@@ -200,4 +216,13 @@ JNIFUNCTION_DEMO(getArrayMarkersID(JNIEnv * env, jobject
     env->ReleaseIntArrayElements(newArray, idArray, NULL);
 
     return newArray;
+}
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
+                         obj, jint
+                         id)) {
+    for (int i = 0; i < NUM_MODELS; i++) {
+        models[i].selected = (models[i].patternID == id);
+    }
 }
