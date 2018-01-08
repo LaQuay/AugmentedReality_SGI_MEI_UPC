@@ -35,16 +35,56 @@ JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
                          obj, jint
                          id));
-};
 
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetTranslation(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         x, jfloat
+                         y, jfloat
+                         z));
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetRotationX(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         angle, jfloat
+                         value));
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetRotationY(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         angle, jfloat
+                         value));
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetRotationZ(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         angle, jfloat
+                         value));
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetScale(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         x, jfloat
+                         y, jfloat
+                         z));
+};
 
 typedef struct ARModel {
     int patternID;
     ARdouble transformationMatrix[16];
     bool visible;
     GLMmodel *obj;
-    ARdouble offset;
     bool selected;
+    GLfloat offset_translation[3];
+    GLfloat offset_rotation_X[2];
+    GLfloat offset_rotation_Y[2];
+    GLfloat offset_rotation_Z[2];
+    GLfloat offset_scale[3];
 } ARModel;
 
 #define NUM_MODELS 4
@@ -185,6 +225,7 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
                                                          models[i].transformationMatrix);
         if (models[i].visible) {
             glLoadMatrixf(models[i].transformationMatrix);
+            glPushMatrix();
 
             float lightDiffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
             if (models[i].selected) {
@@ -198,7 +239,18 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
             glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
             glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
+            //Changing translation of the model
+            if (models[i].offset_translation[0] != 0.0) {
+                glTranslatef(models[i].offset_translation[0], 0.0f, 0.0f);
+            }
+            if (models[i].offset_translation[1] != 0.0) {
+                glTranslatef(0.0f, models[i].offset_translation[1], 0.0f);
+            }
+            if (models[i].offset_translation[2] != 0.0) {
+                glTranslatef(0.0f, 0.0f, models[i].offset_translation[2]);
+            }
             glmDrawArrays(models[i].obj, 0);
+            glPopMatrix();
         }
     }
 }
@@ -225,4 +277,58 @@ JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
     for (int i = 0; i < NUM_MODELS; i++) {
         models[i].selected = (models[i].patternID == id);
     }
+}
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetTranslation(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         x, jfloat
+                         y, jfloat
+                         z)) {
+    models[id].offset_translation[0] += x;
+    models[id].offset_translation[1] += y;
+    models[id].offset_translation[2] += z;
+}
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetRotationX(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         angle, jfloat
+                         value)) {
+    models[id].offset_rotation_X[0] = angle;
+    models[id].offset_rotation_X[1] = value;
+}
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetRotationY(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         angle, jfloat
+                         value)) {
+    models[id].offset_rotation_Y[0] = angle;
+    models[id].offset_rotation_Y[1] = value;
+}
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetRotationZ(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         angle, jfloat
+                         value)) {
+    models[id].offset_rotation_Z[0] = angle;
+    models[id].offset_rotation_Z[1] = value;
+}
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeOffsetScale(JNIEnv * env, jobject
+                         obj, jint
+                         id, jfloat
+                         x, jfloat
+                         y, jfloat
+                         z)) {
+    models[id].offset_scale[0] += x;
+    models[id].offset_scale[1] += y;
+    models[id].offset_scale[2] += z;
 }

@@ -105,13 +105,14 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
     private void setUpListeners() {
         plusScale.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                //TODO Move to its own icon
+                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 2.0f, 0.0f, 0.0f);
             }
         });
 
         minusScale.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, -2.0f, 0.0f, 0.0f);
             }
         });
 
