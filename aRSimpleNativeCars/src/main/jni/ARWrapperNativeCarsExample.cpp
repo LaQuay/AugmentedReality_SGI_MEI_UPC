@@ -48,21 +48,18 @@ JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetRotationX(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         angle, jfloat
                          value));
 
 JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetRotationY(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         angle, jfloat
                          value));
 
 JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetRotationZ(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         angle, jfloat
                          value));
 
 JNIEXPORT void JNICALL
@@ -81,9 +78,9 @@ typedef struct ARModel {
     GLMmodel *obj;
     bool selected;
     GLfloat offset_translation[3];
-    GLfloat offset_rotation_X[2];
-    GLfloat offset_rotation_Y[2];
-    GLfloat offset_rotation_Z[2];
+    GLfloat offset_rotation_X;
+    GLfloat offset_rotation_Y;
+    GLfloat offset_rotation_Z;
     GLfloat offset_scale[3];
 } ARModel;
 
@@ -249,6 +246,37 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
             if (models[i].offset_translation[2] != 0.0) {
                 glTranslatef(0.0f, 0.0f, models[i].offset_translation[2]);
             }
+            if (models[i].offset_rotation_X != 0.0) {
+                if (models[i].offset_rotation_X > 0) {
+                    glRotatef(models[i].offset_rotation_X, 1.0f, 0.0f, 0.0f);
+                } else {
+                    glRotatef(models[i].offset_rotation_X, -1.0f, 0.0f, 0.0f);
+                }
+            }
+            if (models[i].offset_rotation_Y != 0.0) {
+                if (models[i].offset_rotation_Y > 0) {
+                    glRotatef(models[i].offset_rotation_Y, 0.0f, 1.0f, 0.0f);
+                } else {
+                    glRotatef(models[i].offset_rotation_Y, 0.0f, -1.0f, 0.0f);
+                }
+            }
+            if (models[i].offset_rotation_Z != 0.0) {
+                if (models[i].offset_rotation_Z > 0) {
+                    glRotatef(models[i].offset_rotation_Z, 0.0f, 0.0f, 1.0f);
+                } else {
+                    glRotatef(models[i].offset_rotation_Z, 0.0f, 0.0f, -1.0f);
+                }
+            }
+
+            if (models[i].offset_scale[0] != 0.0) {
+                glScalef(models[i].offset_scale[0], 1.0f, 1.0f);
+            }
+            if (models[i].offset_scale[1] != 0.0) {
+                glScalef(1.0, models[i].offset_scale[1], 1.0f);
+            }
+            if (models[i].offset_scale[2] != 0.0) {
+                glScalef(1.0, models[i].offset_scale[2], 1.0f);
+            }
             glmDrawArrays(models[i].obj, 0);
             glPopMatrix();
         }
@@ -295,30 +323,24 @@ JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetRotationX(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         angle, jfloat
                          value)) {
-    models[id].offset_rotation_X[0] = angle;
-    models[id].offset_rotation_X[1] = value;
+    models[id].offset_rotation_X += value;
 }
 
 JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetRotationY(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         angle, jfloat
                          value)) {
-    models[id].offset_rotation_Y[0] = angle;
-    models[id].offset_rotation_Y[1] = value;
+    models[id].offset_rotation_Y += value;
 }
 
 JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetRotationZ(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         angle, jfloat
                          value)) {
-    models[id].offset_rotation_Z[0] = angle;
-    models[id].offset_rotation_Z[1] = value;
+    models[id].offset_rotation_Z += value;
 }
 
 JNIEXPORT void JNICALL

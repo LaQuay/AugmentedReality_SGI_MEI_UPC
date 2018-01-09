@@ -28,6 +28,10 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
     private TextView leftRotation;
     private TextView upRotation;
     private TextView downRotation;
+    private TextView rightTranslation;
+    private TextView leftTranslation;
+    private TextView upTranslation;
+    private TextView downTranslation;
     private TextView nextElement;
     private TextView previousElement;
 
@@ -98,6 +102,11 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
         upRotation = (TextView) controlLayout.findViewById(R.id.control_up_rotation_textbutton);
         downRotation = (TextView) controlLayout.findViewById(R.id.control_down_rotation_textbutton);
 
+        rightTranslation = (TextView) controlLayout.findViewById(R.id.control_right_translation_textbutton);
+        leftTranslation = (TextView) controlLayout.findViewById(R.id.control_left_translation_textbutton);
+        upTranslation = (TextView) controlLayout.findViewById(R.id.control_up_translation_textbutton);
+        downTranslation = (TextView) controlLayout.findViewById(R.id.control_down_translation_textbutton);
+
         nextElement = (TextView) controlLayout.findViewById(R.id.control_next_element_textbutton);
         previousElement = (TextView) controlLayout.findViewById(R.id.control_previous_element_textbutton);
     }
@@ -105,38 +114,61 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
     private void setUpListeners() {
         plusScale.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO Move to its own icon
-                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 2.0f, 0.0f, 0.0f);
+                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, 0.1f, 0.1f, 0.1f);
             }
         });
 
         minusScale.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, -2.0f, 0.0f, 0.0f);
+                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, -0.1f, -0.1f, -0.1f);
             }
         });
 
         rightRotation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                SimpleNativeRenderer.changeOffsetRotationY(posMarkerSelected, -5f);
             }
         });
 
         leftRotation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                SimpleNativeRenderer.changeOffsetRotationY(posMarkerSelected, 5f);
             }
         });
 
         upRotation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                SimpleNativeRenderer.changeOffsetRotationX(posMarkerSelected, -5f);
             }
         });
 
         downRotation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                SimpleNativeRenderer.changeOffsetRotationX(posMarkerSelected, 5f);
+            }
+        });
 
+        rightTranslation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 10.0f, 0.0f, 0.0f);
+            }
+        });
+
+        leftTranslation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, -10.0f, 0.0f, 0.0f);
+            }
+        });
+
+        upTranslation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 0.0f, 8.0f, 0.0f);
+            }
+        });
+
+        downTranslation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 0.0f, -8.0f, 0.0f);
             }
         });
 
