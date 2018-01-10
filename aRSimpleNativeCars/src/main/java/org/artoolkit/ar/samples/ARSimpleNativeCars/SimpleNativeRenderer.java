@@ -35,6 +35,8 @@ public class SimpleNativeRenderer extends ARRenderer {
 
     public static native void selectMarkerByID(int id);
 
+    public static native boolean isMarkerVisibleByID(int id);
+
     public static native void changeOffsetTranslation(int id, float transX, float transY, float transZ);
     public static native void changeOffsetRotationX(int id, float angle);
     public static native void changeOffsetRotationY(int id, float angle);

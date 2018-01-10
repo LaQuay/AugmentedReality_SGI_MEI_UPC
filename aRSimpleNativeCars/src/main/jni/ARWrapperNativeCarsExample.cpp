@@ -36,6 +36,11 @@ JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
                          obj, jint
                          id));
 
+JNIEXPORT jboolean JNICALL
+JNIFUNCTION_DEMO(isMarkerVisibleByID(JNIEnv * env, jobject
+                         obj, jint
+                         id));
+
 JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetTranslation(JNIEnv * env, jobject
                          obj, jint
@@ -224,8 +229,6 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
 
     glEnable(GL_LIGHT0);
 
-    //LOGE("HOLA");
-
     for (int i = 0; i < NUM_MODELS; i++) {
         models[i].visible = arwQueryMarkerTransformation(models[i].patternID,
                                                          models[i].transformationMatrix);
@@ -309,6 +312,13 @@ JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
     for (int i = 0; i < NUM_MODELS; i++) {
         models[i].selected = (models[i].patternID == id);
     }
+}
+
+JNIEXPORT jboolean JNICALL
+JNIFUNCTION_DEMO(isMarkerVisibleByID(JNIEnv * env, jobject
+                         obj, jint
+                         id)) {
+    return (jboolean) models[id].visible;
 }
 
 JNIEXPORT void JNICALL

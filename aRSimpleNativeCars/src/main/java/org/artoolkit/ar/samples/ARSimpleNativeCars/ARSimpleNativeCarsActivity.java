@@ -35,6 +35,7 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
     private ImageButton downTranslation;
     private TextView nextElement;
     private TextView previousElement;
+    private TextView patternInfo;
 
     private int[] idsArray;
     private Handler handler = new Handler();
@@ -66,7 +67,7 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
         setUpListeners();
 
         // No es sincrono, así que trabajar a partir de aquí
-        final Runnable r = new Runnable() {
+        final Runnable runnableInit = new Runnable() {
             public void run() {
                 if (SimpleNativeRenderer.isInitialized()) {
                     Log.e(TAG, "Initialized");
@@ -77,8 +78,37 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
                 }
             }
         };
+        handler.postDelayed(runnableInit, 500);
 
-        handler.postDelayed(r, 500);
+        // Mostrar mensaje si el Marker seleccionado está visible
+        final Runnable runnableMarkerVisible = new Runnable() {
+            public void run() {
+                if (SimpleNativeRenderer.isMarkerVisibleByID(posMarkerSelected)) {
+                    String title = "";
+
+                    switch (posMarkerSelected) {
+                        case 0:
+                            title = "Porsche 911 GT3";
+                            break;
+                        case 1:
+                            title = "Ferrari Modena Spider";
+                            break;
+                        case 2:
+                            title = "Marco Polo Ideale";
+                            break;
+                        case 3:
+                            title = "Chevrolet Camaro Patrol";
+                            break;
+                    }
+                    patternInfo.setText(title);
+                    patternInfo.setVisibility(View.VISIBLE);
+                } else {
+                    patternInfo.setVisibility(View.INVISIBLE);
+                }
+                handler.postDelayed(this, 250);
+            }
+        };
+        handler.postDelayed(runnableMarkerVisible, 1000);
     }
 
     private void startCode() {
@@ -110,6 +140,8 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
 
         nextElement = (TextView) controlLayout.findViewById(R.id.control_next_element_textbutton);
         previousElement = (TextView) controlLayout.findViewById(R.id.control_previous_element_textbutton);
+
+        patternInfo = (TextView) controlLayout.findViewById(R.id.tv_control_pattern_info);
     }
 
     private void setUpListeners() {

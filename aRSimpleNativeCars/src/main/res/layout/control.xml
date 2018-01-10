@@ -167,4 +167,18 @@
             android:text="Previous"
             android:textSize="20sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_control_pattern_info"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#4db6ac"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="Pattern"
+        android:textSize="20sp" />
 </RelativeLayout>
