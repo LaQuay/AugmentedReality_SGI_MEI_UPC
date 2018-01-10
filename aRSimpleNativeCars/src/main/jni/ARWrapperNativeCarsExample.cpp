@@ -66,9 +66,7 @@ JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetScale(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         x, jfloat
-                         y, jfloat
-                         z));
+                         scale));
 };
 
 typedef struct ARModel {
@@ -81,7 +79,7 @@ typedef struct ARModel {
     GLfloat offset_rotation_X;
     GLfloat offset_rotation_Y;
     GLfloat offset_rotation_Z;
-    GLfloat offset_scale[3];
+    GLfloat offset_scale;
 } ARModel;
 
 #define NUM_MODELS 4
@@ -110,11 +108,16 @@ JNIFUNCTION_DEMO(demoInitialise(JNIEnv * env, jobject
         LOGE("Error loading model from file '%s'.", model0file);
         exit(-1);
     }
-    glmScale(models[0].obj, 0.05f);
+    models[0].offset_scale = 0.2f;
+    glmScale(models[0].obj, models[0].offset_scale);
     glmRotate(models[0].obj, 3.14159f / 2.0f, 0.0f, 0.0f, 1.0f);
     glmRotate(models[0].obj, 3.14159f / 2.0f, -1.0f, 0.0f, 0.0f);
     glmRotate(models[0].obj, 3.14159f / 2.0f, 0.0f, 1.0f, 0.0f);
-    GLfloat translate0[3] = {0.0f, -25.0f, 0.0f};
+    models[0].offset_translation[0] = 0.0f;
+    models[0].offset_translation[1] = -10.0f;
+    models[0].offset_translation[2] = 0.0f;
+    GLfloat translate0[3] = {models[0].offset_translation[0], models[0].offset_translation[1],
+                             models[0].offset_translation[2]};
     glmTranslate(models[0].obj, translate0);
     glmCreateArrays(models[0].obj, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
     models[0].visible = false;
@@ -129,10 +132,15 @@ JNIFUNCTION_DEMO(demoInitialise(JNIEnv * env, jobject
         LOGE("Error loading model from file '%s'.", model1file);
         exit(-1);
     }
-    glmScale(models[1].obj, 0.05f);
+    models[1].offset_scale = 0.2f;
+    glmScale(models[1].obj, models[1].offset_scale);
     glmRotate(models[1].obj, 3.14159f / 2.0f, 0.0f, 0.0f, 1.0f);
     glmRotate(models[1].obj, 3.14159f / 2.0f, -1.0f, 0.0f, 0.0f);
-    GLfloat translate1[3] = {0.0f, -25.0f, 0.0f};
+    models[1].offset_translation[0] = 0.0f;
+    models[1].offset_translation[1] = -10.0f;
+    models[1].offset_translation[2] = 0.0f;
+    GLfloat translate1[3] = {models[1].offset_translation[0], models[1].offset_translation[1],
+                             models[1].offset_translation[2]};
     glmTranslate(models[1].obj, translate1);
     glmCreateArrays(models[1].obj, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
     models[1].visible = false;
@@ -144,12 +152,13 @@ JNIFUNCTION_DEMO(demoInitialise(JNIEnv * env, jobject
 
     models[2].obj = glmReadOBJ2(model2file, 0, 0); // context 0, don't read textures yet.
     if (!models[2].obj) {
-        LOGE("Error loading model from file '%s'.", model0file);
+        LOGE("Error loading model from file '%s'.", model2file);
         exit(-1);
     }
-    glmScale(models[2].obj, 35.0f);
+    models[2].offset_scale = 6.0f;
+    glmScale(models[2].obj, models[2].offset_scale);
     glmRotate(models[2].obj, 3.14159f / 2.0f, 0.0f, -1.0f, 0.0f);
-    GLfloat translate2[3] = {20.0f, 0.0f, 0.0f};
+    GLfloat translate2[3] = {5.0f, 0.0f, 0.0f};
     glmTranslate(models[2].obj, translate2);
     glmCreateArrays(models[2].obj, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
     models[2].visible = false;
@@ -161,10 +170,11 @@ JNIFUNCTION_DEMO(demoInitialise(JNIEnv * env, jobject
 
     models[3].obj = glmReadOBJ2(model3file, 0, 0); // context 0, don't read textures yet.
     if (!models[3].obj) {
-        LOGE("Error loading model from file '%s'.", model0file);
+        LOGE("Error loading model from file '%s'.", model3file);
         exit(-1);
     }
-    glmScale(models[3].obj, 15.0f);
+    models[3].offset_scale = 3.3f;
+    glmScale(models[3].obj, models[3].offset_scale);
     glmRotate(models[3].obj, 3.14159f / 2.0f, 0.0f, 1.0f, 0.0f);
     glmCreateArrays(models[3].obj, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
     models[3].visible = false;
@@ -214,8 +224,7 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
 
     glEnable(GL_LIGHT0);
 
-    //LOGE("Models selected '%d' '%d' '%d' '%d'",
-    //     models[0].selected, models[1].selected, models[2].selected, models[3].selected);
+    //LOGE("HOLA");
 
     for (int i = 0; i < NUM_MODELS; i++) {
         models[i].visible = arwQueryMarkerTransformation(models[i].patternID,
@@ -246,6 +255,7 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
             if (models[i].offset_translation[2] != 0.0) {
                 glTranslatef(0.0f, 0.0f, models[i].offset_translation[2]);
             }
+
             if (models[i].offset_rotation_X != 0.0) {
                 if (models[i].offset_rotation_X > 0) {
                     glRotatef(models[i].offset_rotation_X, 1.0f, 0.0f, 0.0f);
@@ -268,14 +278,8 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
                 }
             }
 
-            if (models[i].offset_scale[0] != 0.0) {
-                glScalef(models[i].offset_scale[0], 1.0f, 1.0f);
-            }
-            if (models[i].offset_scale[1] != 0.0) {
-                glScalef(1.0, models[i].offset_scale[1], 1.0f);
-            }
-            if (models[i].offset_scale[2] != 0.0) {
-                glScalef(1.0, 1.0f, models[i].offset_scale[2]);
+            if (models[i].offset_scale != 0.0) {
+                glScalef(models[i].offset_scale, models[i].offset_scale, models[i].offset_scale);
             }
             glmDrawArrays(models[i].obj, 0);
             glPopMatrix();
@@ -347,10 +351,6 @@ JNIEXPORT void JNICALL
 JNIFUNCTION_DEMO(changeOffsetScale(JNIEnv * env, jobject
                          obj, jint
                          id, jfloat
-                         x, jfloat
-                         y, jfloat
-                         z)) {
-    models[id].offset_scale[0] += x;
-    models[id].offset_scale[1] += y;
-    models[id].offset_scale[2] += z;
+                         scale)) {
+    models[id].offset_scale += scale;
 }

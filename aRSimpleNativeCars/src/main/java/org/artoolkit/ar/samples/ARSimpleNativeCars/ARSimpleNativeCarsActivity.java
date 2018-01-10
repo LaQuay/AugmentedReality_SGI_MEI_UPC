@@ -114,13 +114,13 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
     private void setUpListeners() {
         plusScale.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, 0.1f, 0.1f, 0.1f);
+                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, 0.1f);
             }
         });
 
         minusScale.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, -0.1f, -0.1f, -0.1f);
+                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, -0.1f);
             }
         });
 

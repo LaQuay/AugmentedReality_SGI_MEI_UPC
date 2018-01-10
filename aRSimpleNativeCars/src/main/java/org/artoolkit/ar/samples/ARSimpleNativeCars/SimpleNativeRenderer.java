@@ -39,7 +39,8 @@ public class SimpleNativeRenderer extends ARRenderer {
     public static native void changeOffsetRotationX(int id, float angle);
     public static native void changeOffsetRotationY(int id, float angle);
     public static native void changeOffsetRotationZ(int id, float angle);
-    public static native void changeOffsetScale(int id, float scaleX, float scaleY, float scaleZ);
+
+    public static native void changeOffsetScale(int id, float scale);
 
     static boolean isInitialized() {
         return initialized;
