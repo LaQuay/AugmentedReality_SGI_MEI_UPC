@@ -275,7 +275,7 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
                 glScalef(1.0, models[i].offset_scale[1], 1.0f);
             }
             if (models[i].offset_scale[2] != 0.0) {
-                glScalef(1.0, models[i].offset_scale[2], 1.0f);
+                glScalef(1.0, 1.0f, models[i].offset_scale[2]);
             }
             glmDrawArrays(models[i].obj, 0);
             glPopMatrix();
