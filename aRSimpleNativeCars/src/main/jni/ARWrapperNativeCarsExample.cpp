@@ -236,18 +236,6 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
             glLoadMatrixf(models[i].transformationMatrix);
             glPushMatrix();
 
-            float lightDiffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-            if (models[i].selected) {
-                lightDiffuse[0] = 0.0f;
-                lightDiffuse[1] = 1.0f;
-                lightDiffuse[2] = 0.0f;
-                lightDiffuse[3] = 0.0f;
-            }
-
-            glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
-            glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
-            glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-
             //Changing translation of the model
             if (models[i].offset_translation[0] != 0.0) {
                 glTranslatef(models[i].offset_translation[0], 0.0f, 0.0f);
@@ -259,6 +247,7 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
                 glTranslatef(0.0f, 0.0f, models[i].offset_translation[2]);
             }
 
+            //Changing rotation of the model
             if (models[i].offset_rotation_X != 0.0) {
                 if (models[i].offset_rotation_X > 0) {
                     glRotatef(models[i].offset_rotation_X, 1.0f, 0.0f, 0.0f);
@@ -281,9 +270,15 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
                 }
             }
 
+            //Changing scale of the model
             if (models[i].offset_scale != 0.0) {
                 glScalef(models[i].offset_scale, models[i].offset_scale, models[i].offset_scale);
             }
+
+            glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+            glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+            glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+
             glmDrawArrays(models[i].obj, 0);
             glPopMatrix();
         }
