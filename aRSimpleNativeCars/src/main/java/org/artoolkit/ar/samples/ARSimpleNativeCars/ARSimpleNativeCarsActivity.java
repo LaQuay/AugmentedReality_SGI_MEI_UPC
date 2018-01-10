@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +23,16 @@ import org.artoolkit.ar.base.rendering.ARRenderer;
 public class ARSimpleNativeCarsActivity extends ARActivity {
     private SimpleNativeRenderer simpleNativeRenderer = new SimpleNativeRenderer();
     private FrameLayout controlLayout;
-    private TextView plusScale;
-    private TextView minusScale;
-    private TextView rightRotation;
-    private TextView leftRotation;
-    private TextView upRotation;
-    private TextView downRotation;
-    private TextView rightTranslation;
-    private TextView leftTranslation;
-    private TextView upTranslation;
-    private TextView downTranslation;
+    private ImageButton plusScale;
+    private ImageButton minusScale;
+    private ImageButton rightRotation;
+    private ImageButton leftRotation;
+    private ImageButton upRotation;
+    private ImageButton downRotation;
+    private ImageButton rightTranslation;
+    private ImageButton leftTranslation;
+    private ImageButton upTranslation;
+    private ImageButton downTranslation;
     private TextView nextElement;
     private TextView previousElement;
 
@@ -95,17 +96,17 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
         controlLayout = (FrameLayout) findViewById(R.id.controlLayout);
         controlLayout.addView(getLayoutInflater().inflate(R.layout.control, null));
 
-        plusScale = (TextView) controlLayout.findViewById(R.id.control_plus_scale_textbutton);
-        minusScale = (TextView) controlLayout.findViewById(R.id.control_minus_scale_textbutton);
-        rightRotation = (TextView) controlLayout.findViewById(R.id.control_right_rotation_textbutton);
-        leftRotation = (TextView) controlLayout.findViewById(R.id.control_left_rotation_textbutton);
-        upRotation = (TextView) controlLayout.findViewById(R.id.control_up_rotation_textbutton);
-        downRotation = (TextView) controlLayout.findViewById(R.id.control_down_rotation_textbutton);
+        plusScale = (ImageButton) controlLayout.findViewById(R.id.iv_control_plus_scale);
+        minusScale = (ImageButton) controlLayout.findViewById(R.id.iv_control_minus_scale);
+        rightRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_right_rotation);
+        leftRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_left_rotation);
+        upRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_up_rotation);
+        downRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_down_rotation);
 
-        rightTranslation = (TextView) controlLayout.findViewById(R.id.control_right_translation_textbutton);
-        leftTranslation = (TextView) controlLayout.findViewById(R.id.control_left_translation_textbutton);
-        upTranslation = (TextView) controlLayout.findViewById(R.id.control_up_translation_textbutton);
-        downTranslation = (TextView) controlLayout.findViewById(R.id.control_down_translation_textbutton);
+        rightTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_right_translation);
+        leftTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_left_translation);
+        upTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_up_translation);
+        downTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_down_translation);
 
         nextElement = (TextView) controlLayout.findViewById(R.id.control_next_element_textbutton);
         previousElement = (TextView) controlLayout.findViewById(R.id.control_previous_element_textbutton);
