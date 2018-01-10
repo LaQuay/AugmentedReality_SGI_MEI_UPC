@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <ImageButton
+        <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
             android:id="@+id/iv_control_plus_scale"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -18,7 +18,7 @@
             android:background="#da26a69a"
             android:src="@drawable/ic_magnify_plus_outline_black_36dp" />
 
-        <ImageButton
+        <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
             android:id="@+id/iv_control_minus_scale"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -36,7 +36,7 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <ImageButton
+        <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
             android:id="@+id/iv_control_up_rotation"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
                 android:id="@+id/iv_control_left_rotation"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -65,7 +65,7 @@
                 android:text="Rotate"
                 android:textSize="14sp" />
 
-            <ImageButton
+            <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
                 android:id="@+id/iv_control_right_rotation"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -74,7 +74,7 @@
                 android:src="@drawable/ic_rotate_right_black_36dp" />
         </LinearLayout>
 
-        <ImageButton
+        <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
             android:id="@+id/iv_control_down_rotation"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -92,7 +92,7 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <ImageButton
+        <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
             android:id="@+id/iv_control_up_translation"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
                 android:id="@+id/iv_control_left_translation"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -121,7 +121,7 @@
                 android:text="Move"
                 android:textSize="16sp" />
 
-            <ImageButton
+            <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
                 android:id="@+id/iv_control_right_translation"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -130,7 +130,7 @@
                 android:src="@drawable/ic_chevron_right_black_36dp" />
         </LinearLayout>
 
-        <ImageButton
+        <org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton
             android:id="@+id/iv_control_down_translation"
             android:layout_width="50dp"
             android:layout_height="50dp"

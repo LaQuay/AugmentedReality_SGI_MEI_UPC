@@ -1,12 +1,12 @@
 package org.artoolkit.ar.samples.ARSimpleNativeCars;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,20 +19,21 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.artoolkit.ar.base.ARActivity;
 import org.artoolkit.ar.base.rendering.ARRenderer;
+import org.artoolkit.ar.samples.ARSimpleNativeCars.components.CustomImageButton;
 
 public class ARSimpleNativeCarsActivity extends ARActivity {
     private SimpleNativeRenderer simpleNativeRenderer = new SimpleNativeRenderer();
     private FrameLayout controlLayout;
-    private ImageButton plusScale;
-    private ImageButton minusScale;
-    private ImageButton rightRotation;
-    private ImageButton leftRotation;
-    private ImageButton upRotation;
-    private ImageButton downRotation;
-    private ImageButton rightTranslation;
-    private ImageButton leftTranslation;
-    private ImageButton upTranslation;
-    private ImageButton downTranslation;
+    private CustomImageButton plusScale;
+    private CustomImageButton minusScale;
+    private CustomImageButton rightRotation;
+    private CustomImageButton leftRotation;
+    private CustomImageButton upRotation;
+    private CustomImageButton downRotation;
+    private CustomImageButton rightTranslation;
+    private CustomImageButton leftTranslation;
+    private CustomImageButton upTranslation;
+    private CustomImageButton downTranslation;
     private TextView nextElement;
     private TextView previousElement;
     private TextView patternInfo;
@@ -126,17 +127,17 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
         controlLayout = (FrameLayout) findViewById(R.id.controlLayout);
         controlLayout.addView(getLayoutInflater().inflate(R.layout.control, null));
 
-        plusScale = (ImageButton) controlLayout.findViewById(R.id.iv_control_plus_scale);
-        minusScale = (ImageButton) controlLayout.findViewById(R.id.iv_control_minus_scale);
-        rightRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_right_rotation);
-        leftRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_left_rotation);
-        upRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_up_rotation);
-        downRotation = (ImageButton) controlLayout.findViewById(R.id.iv_control_down_rotation);
+        plusScale = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_plus_scale);
+        minusScale = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_minus_scale);
+        rightRotation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_right_rotation);
+        leftRotation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_left_rotation);
+        upRotation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_up_rotation);
+        downRotation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_down_rotation);
 
-        rightTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_right_translation);
-        leftTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_left_translation);
-        upTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_up_translation);
-        downTranslation = (ImageButton) controlLayout.findViewById(R.id.iv_control_down_translation);
+        rightTranslation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_right_translation);
+        leftTranslation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_left_translation);
+        upTranslation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_up_translation);
+        downTranslation = (CustomImageButton) controlLayout.findViewById(R.id.iv_control_down_translation);
 
         nextElement = (TextView) controlLayout.findViewById(R.id.control_next_element_textbutton);
         previousElement = (TextView) controlLayout.findViewById(R.id.control_previous_element_textbutton);
@@ -144,66 +145,35 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
         patternInfo = (TextView) controlLayout.findViewById(R.id.tv_control_pattern_info);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setUpListeners() {
-        plusScale.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, 0.1f);
+        final Runnable runnableInit2 = new Runnable() {
+            public void run() {
+                if (plusScale.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, 0.02f);
+                } else if (minusScale.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, -0.02f);
+                } else if (rightRotation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetRotationY(posMarkerSelected, -5.0f);
+                } else if (leftRotation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetRotationY(posMarkerSelected, 5.0f);
+                } else if (upRotation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetRotationY(posMarkerSelected, 5.0f);
+                } else if (downRotation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetRotationX(posMarkerSelected, 5.0f);
+                } else if (rightTranslation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 10.0f, 0.0f, 0.0f);
+                } else if (leftTranslation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, -10.0f, 0.0f, 0.0f);
+                } else if (upTranslation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 0.0f, 8.0f, 0.0f);
+                } else if (downTranslation.isPressed()) {
+                    SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 0.0f, -8.0f, 0.0f);
+                }
+                handler.postDelayed(this, 100);
             }
-        });
-
-        minusScale.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetScale(posMarkerSelected, -0.1f);
-            }
-        });
-
-        rightRotation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetRotationY(posMarkerSelected, -5f);
-            }
-        });
-
-        leftRotation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetRotationY(posMarkerSelected, 5f);
-            }
-        });
-
-        upRotation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetRotationX(posMarkerSelected, -5f);
-            }
-        });
-
-        downRotation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetRotationX(posMarkerSelected, 5f);
-            }
-        });
-
-        rightTranslation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 10.0f, 0.0f, 0.0f);
-            }
-        });
-
-        leftTranslation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, -10.0f, 0.0f, 0.0f);
-            }
-        });
-
-        upTranslation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 0.0f, 8.0f, 0.0f);
-            }
-        });
-
-        downTranslation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SimpleNativeRenderer.changeOffsetTranslation(posMarkerSelected, 0.0f, -8.0f, 0.0f);
-            }
-        });
+        };
+        handler.postDelayed(runnableInit2, 500);
 
         nextElement.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
