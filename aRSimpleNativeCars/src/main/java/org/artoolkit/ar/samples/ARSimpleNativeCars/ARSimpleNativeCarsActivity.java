@@ -38,6 +38,8 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
     private TextView previousElement;
     private TextView patternInfo;
 
+    private TextView controlRotateText;
+
     private int[] idsArray;
     private Handler handler = new Handler();
     private int posMarkerSelected;
@@ -142,6 +144,8 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
         nextElement = (TextView) controlLayout.findViewById(R.id.control_next_element_textbutton);
         previousElement = (TextView) controlLayout.findViewById(R.id.control_previous_element_textbutton);
 
+        controlRotateText = (TextView) controlLayout.findViewById(R.id.control_rotate_text);
+
         patternInfo = (TextView) controlLayout.findViewById(R.id.tv_control_pattern_info);
     }
 
@@ -186,6 +190,16 @@ public class ARSimpleNativeCarsActivity extends ARActivity {
                 selectPreviousModel();
             }
         });
+
+        controlRotateText.setOnLongClickListener(
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        SimpleNativeRenderer.changeLightByID(posMarkerSelected);
+                        return false;
+                    }
+                }
+        );
     }
 
     private void selectNextModel() {

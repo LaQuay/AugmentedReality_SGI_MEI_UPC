@@ -36,6 +36,11 @@ JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
                          obj, jint
                          id));
 
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeLightByID(JNIEnv * env, jobject
+                         obj, jint
+                         id));
+
 JNIEXPORT jboolean JNICALL
 JNIFUNCTION_DEMO(isMarkerVisibleByID(JNIEnv * env, jobject
                          obj, jint
@@ -80,6 +85,7 @@ typedef struct ARModel {
     bool visible;
     GLMmodel *obj;
     bool selected;
+    bool customLightActivated;
     GLfloat offset_translation[3];
     GLfloat offset_rotation_X;
     GLfloat offset_rotation_Y;
@@ -275,6 +281,14 @@ JNIFUNCTION_DEMO(demoDrawFrame(JNIEnv * env, jobject
                 glScalef(models[i].offset_scale, models[i].offset_scale, models[i].offset_scale);
             }
 
+            float lightDiffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+            if (models[i].customLightActivated) {
+                lightDiffuse[0] = 0.0f;
+                lightDiffuse[1] = 1.0f;
+                lightDiffuse[2] = 0.0f;
+                lightDiffuse[3] = 0.0f;
+            }
+
             glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
             glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
             glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
@@ -306,6 +320,15 @@ JNIFUNCTION_DEMO(selectMarkerByID(JNIEnv * env, jobject
                          id)) {
     for (int i = 0; i < NUM_MODELS; i++) {
         models[i].selected = (models[i].patternID == id);
+    }
+}
+
+JNIEXPORT void JNICALL
+JNIFUNCTION_DEMO(changeLightByID(JNIEnv * env, jobject
+                         obj, jint
+                         id)) {
+    for (int i = 0; i < NUM_MODELS; i++) {
+        models[i].customLightActivated = (models[i].patternID == id);
     }
 }
 

@@ -58,6 +58,7 @@
                 android:src="@drawable/ic_rotate_left_black_36dp" />
 
             <TextView
+                android:id="@+id/control_rotate_text"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="#da26a69a"
